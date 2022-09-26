@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# React Pokemon Index
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting Started
 
-## Available Scripts
+- Open your command line and navigate to your repos directory (if you do not have a repos folder, then you can use mkdir repos to create one)
+- Use this template repository to start a new project in your repos folder: git clone <repo_name>
+  cd repo_name to navigate into your new repo directory
+- Make sure to run `npm install` to fetch the dependencies for the project
+- Start Visual Studio Code and select 'Open Folder'. Then select repo_name to open the folder in the editor (or just type code . in your terminal inside the repo directory)
+- Follow the instructions on the README.md file to complete exercises
+- Open the app.js file to get started
 
-In the project directory, you can run:
+## Project
 
-### `npm start`
+### Objective
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Your objective is to call an API that returns a list of pokemon. You will display the pokemon to the screen. You will provide a few search functionalities for filtering the display of pokemon. You may use class components or react hooks, your preference. Below are instructions:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Instructions
 
-### `npm test`
+- Fetch data from this open source JSON (based on the PokemonGO
+  game): "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Display the list of Pokemon however you like, making sure to show
+  their “name,” “num,” “type,” and “weaknesses.”
 
-### `npm run build`
+- Make this list searchable via a search box. For simplicity, just search through the names of the Pokemon,
+  only.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Also, make this list filterable via the “type” and “weaknesses” fields.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- You should be able to apply multiple filters at a time. This means that the search should narrow by name, or type, or weakness, depending on how the user (or you as the developer) designs the search.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - For example, I may want to search for type "Grass" and weakness "Fire". The filtered Pokemon should be both of type "Grass" and weakness "Fire"
 
-### `npm run eject`
+- NOTE: You may use checkboxes, dropdowns, text input fields, or any other search filter method.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- REMEMBER: The main goal is functionality. You can always come back and style/refactor/optimize/etc.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## BONUS
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Create a generic “Details Page” component for each Pokemon, showing details related to the selected Pokemon
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Extra
 
-## Learn More
+- On each Pokemon's details page, create a link to the details page of the other pokemon (if any) being referenced by that Pokemon object (i.e. “next_evolution”)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Also, create a link to a Pokemon’s Details Page from their listing
+  in your master list.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Add a Back button from the Details Page to
+  return to the index list (main page).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
