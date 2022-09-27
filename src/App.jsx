@@ -5,13 +5,13 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import "./App.css";
-//import { HomePage } from "./pages/home.page.jsx";
+import { PokedexPage } from "./pages/pokedex.page.jsx";
 //import { FilmsPage } from "./pages/films.page.jsx";
 //import { SingleFilmPage } from "./pages/singlefilm.page.jsx"
 function App(props) {
 
   //const { pathname } = useLocation();
-  //console.log(pathname)
+  console.log(`---Begin Function App()---`);
 
   return (
     <BrowserRouter>
@@ -26,9 +26,7 @@ function App(props) {
         </ul>
       </nav>
       <Routes>
-        <Route exact path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="/films" element={<FilmsPage></FilmsPage>}></Route>
-        <Route path="/film/:id" element={<SingleFilmPage></SingleFilmPage>}></Route>
+        <Route exact path="/" element={<PokedexPage></PokedexPage>}></Route>
       </Routes>
     </BrowserRouter>
   )
