@@ -12,7 +12,7 @@ function PokedexPage(props) {
 
     console.log(`---Begin Function PokedexPage()---`);
 
-    const [ pokedexList, setPokedexList ] = useState([]);
+    const [ pokedexList, setPokedexList ] = useState({"pokemon":[{}]});
     const [ errorText, setErrorText ] = useState("");
     const [ errorTest, setErrorTest ] = useState(false);
     //const [ searchDirector, setSearchDirector ] = useState("All");
@@ -80,7 +80,9 @@ function PokedexPage(props) {
     //console.log(`Film Stats=`, filmStats);
     //let { total, avg_score, latest } = filmStats;
 
-    let pokemons = pokedexList.pokemon;
+    pokedexList.pokemon.map((value, index, array) => {
+        console.log('Value',value);
+    })
     return(
     <div className="container">
         <div className="row">
@@ -91,12 +93,11 @@ function PokedexPage(props) {
         <div className="row">
             <div className="col-5 my-center">
                 <h4 className="text-center color-white">Pokemon</h4>
-                <ul>
+                <ul className="list-group">
                 {pokedexList.pokemon.map((value, index, array) => {
-                        return (<li key={value.id}>{value.name} {value.num}</li>)
+                        return (<li className="list-group-item" key={value.id} id={value.id}>{`${value.id}.`} {value.name} <img width="35rem" src={value.img}></img></li>)
                         })
-                    })
-                   
+                }
                 </ul>
                 <p className="error"><span className="color-red">{errorText}</span></p>
             </div>
