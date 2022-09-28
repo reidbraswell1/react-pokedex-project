@@ -4,9 +4,9 @@ import { useEffect } from "react";
 //import { filterFilmsByDirector } from "../helpers/film.helpers.js";
 //import { getListOf } from "../helpers/film.helpers.js";
 //import { getFilmStats } from "../helpers/film.helpers.js";
-import { Link } from "react-router-dom";
 import Footer from "../components/footer.jsx";
-import UnorderedList from "../components/unorderedList.jsx"
+import UnorderedList from "../components/unorderedList.jsx";
+import Table from "../components/table.jsx";
 
 // Pokedex Page Main Function
 const PokedexPage = (props) => {
@@ -67,10 +67,6 @@ const PokedexPage = (props) => {
     console.log(`PokedexListPokemon=`,pokedexList.pokemon)
     let pokemonTest = pokedexList.pokemon;
    
-
-    pokedexList.pokemon.map((value, index, array) => {
-        console.log('Value',value);
-    })
     return(
     <div className="container">
         <div className="row">
@@ -81,16 +77,11 @@ const PokedexPage = (props) => {
         <div className="row">
             <div className="col-5 my-center">
                 <h4 className="text-center color-white">Pokemon Number Name Type Weaknesses</h4>
+                {/*}
                 <UnorderedList pokemons={pokedexList.pokemon}></UnorderedList>
-                <ul className="list-group">
-                {pokedexList.pokemon.map((value, index, array) => {
-                        return (<li className="list-group-item" key={value.id} id={value.id}>
-                            {`${value.id}.`} {value.name}, {value.type}, '{value.weaknesses.toString()}'
-                            <img className="border border-rounded" style={{marginLeft:".5rem", padding:"2px"}} width="35rem" src={value.img}></img>
-                            </li>)
-                        })
-                }
-                </ul>
+                <Table pokemons={pokedexList.pokemon}></Table>
+    {*/}
+<Table pokemons={pokedexList.pokemon}></Table>
                 <p className="error"><span className="color-red">{errorText}</span></p>
             </div>
         </div>
