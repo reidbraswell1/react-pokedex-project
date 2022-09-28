@@ -6,9 +6,10 @@ import { useEffect } from "react";
 //import { getFilmStats } from "../helpers/film.helpers.js";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer.jsx";
+import UnorderedList from "../components/unorderedList.jsx"
 
 // Pokedex Page Main Function
-function PokedexPage(props) {
+const PokedexPage = (props) => {
 
     console.log(`---Begin Function PokedexPage()---`);
 
@@ -24,7 +25,7 @@ function PokedexPage(props) {
         console.log(`---End useEffect()---`);
     }, []);
 
-    function getPokedexList() {
+    const getPokedexList = () => {
         console.log(`---Begin PokedexPage getPokedexIndex()---`);
  
         const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
@@ -65,20 +66,7 @@ function PokedexPage(props) {
     console.log(`PokedexList=`,pokedexList);
     console.log(`PokedexListPokemon=`,pokedexList.pokemon)
     let pokemonTest = pokedexList.pokemon;
-    /*
-    try {
-        pokedexList.pokemon.map((value, index, array) => {
-            console.log(value.name);
-        })
-    }
-    catch(err) {
-        console.log(`Error`,err);
-    }
-    */
-    //let filmsByDirector = filterFilmsByDirector(list, searchDirector);
-    //let filmStats = getFilmStats(filmsByDirector);
-    //console.log(`Film Stats=`, filmStats);
-    //let { total, avg_score, latest } = filmStats;
+   
 
     pokedexList.pokemon.map((value, index, array) => {
         console.log('Value',value);
@@ -92,10 +80,14 @@ function PokedexPage(props) {
         </div>
         <div className="row">
             <div className="col-5 my-center">
-                <h4 className="text-center color-white">Pokemon</h4>
+                <h4 className="text-center color-white">Pokemon Number Name Type Weaknesses</h4>
+                <UnorderedList pokemons={pokedexList.pokemon}></UnorderedList>
                 <ul className="list-group">
                 {pokedexList.pokemon.map((value, index, array) => {
-                        return (<li className="list-group-item" key={value.id} id={value.id}>{`${value.id}.`} {value.name} <img width="35rem" src={value.img}></img></li>)
+                        return (<li className="list-group-item" key={value.id} id={value.id}>
+                            {`${value.id}.`} {value.name}, {value.type}, '{value.weaknesses.toString()}'
+                            <img className="border border-rounded" style={{marginLeft:".5rem", padding:"2px"}} width="35rem" src={value.img}></img>
+                            </li>)
                         })
                 }
                 </ul>
