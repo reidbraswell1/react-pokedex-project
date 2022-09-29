@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Footer from "../components/footer.jsx";
 import UnorderedList from "../components/unorderedList.jsx";
 import Table from "../components/table.jsx";
-import { derivePokemonWeaknesses } from "../utils/pokemonUtils.js";
+import { derivePokemonTypes, derivePokemonWeaknesses } from "../utils/pokemonUtils.js";
 
 // Pokedex Page Main Function
 const PokedexPage = (props) => {
@@ -15,6 +15,8 @@ const PokedexPage = (props) => {
     console.log(`---Begin Function PokedexPage()---`);
 
     const [ pokedexList, setPokedexList ] = useState({"pokemon":[{}]});
+    const [ types, setTypes ] = useState([]);
+    const [ weaknesses, setWeaknesses ] = useState([]);
     const [ errorText, setErrorText ] = useState("");
     const [ errorTest, setErrorTest ] = useState(false);
     //const [ searchDirector, setSearchDirector ] = useState("All");
@@ -52,10 +54,12 @@ const PokedexPage = (props) => {
             .then((data) => {
                 console.log(`Data=`,data);
                 setPokedexList(data);
-                derivePokemonWeaknesses(data.pokemon);
-                //const directors = getListOf(data, "director");
-                //console.log(`Directors=`,directors);
-                //setDirectors(directors);
+                let weaknesses = derivePokemonWeaknesses(data.pokemon);
+                let types = derivePokemonTypes(data.pokemon);
+                console.log(`Weaknesses=`,weaknesses);
+                console.log(`Types=`,types);
+                setWeaknesses(weaknesses);
+                setTypes(types);
                 setErrorText("");
             })
             .catch((err) => { 
