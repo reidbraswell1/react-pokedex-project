@@ -35,6 +35,10 @@ a {
   color: white !important;
 }
 
+.imgLink:hover {
+  border: 1px solid blue !important;
+}
+
 .link {
   color: black !important;
 }
