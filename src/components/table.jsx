@@ -7,7 +7,7 @@ const Table = (props) => {
             <tr>
                 <th scope="col">Num</th>
                 <th scope="col">Name</th>
-                <th scope="col">Type</th>
+                <th scope="col">Types</th>
                 <th scope="col">Weaknesses</th>
                 <th scope="col">Image</th>
             </tr>
@@ -16,21 +16,27 @@ const Table = (props) => {
         {props.pokemons.map((value, index, array) => {
                 let weaknesses;
                 if(typeof value.weaknesses === "undefined") {
-                console.log("here");
                     weaknesses="";
                 }
                 else
                     weaknesses=value.weaknesses.toString();
                 
+                let types;
+                if(typeof value.type === "undefined") {
+                    types="";
+                }
+                else
+                    types=value.type.toString();
+                
                 return (<tr id={value.id}>
                             <td scope="row">{value.num}</td>
-                            <td><Link className="link" to="">
-                                    {value.name}
-                                </Link></td>
-                            <td>{value.type}</td>
+                            <td>{value.name}</td>
+                            <td>{types}</td>
                             <td>{weaknesses}</td>
                             <td>
+                                <Link className="imgLink" to="">
                                 <img className="border border-rounded" style={{marginLeft:".5rem", padding:"2px"}} width="35rem" src={value.img}></img>
+                                </Link>
                             </td>
                     </tr>  
                     )
