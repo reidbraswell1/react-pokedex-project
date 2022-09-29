@@ -76,12 +76,7 @@ const PokedexPage = (props) => {
         </div>
         <div className="row">
             <div className="col-5 my-center">
-                <h4 className="text-center color-white">Pokemon Number Name Type Weaknesses</h4>
-                {/*}
-                <UnorderedList pokemons={pokedexList.pokemon}></UnorderedList>
                 <Table pokemons={pokedexList.pokemon}></Table>
-    {*/}
-<Table pokemons={pokedexList.pokemon}></Table>
                 <p className="error"><span className="color-red">{errorText}</span></p>
             </div>
         </div>
