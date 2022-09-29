@@ -22,8 +22,8 @@ const Table = (props) => {
                 else
                     weaknesses=value.weaknesses.toString();
                 
-                return (<tr>
-                            <td scope="row">{value.id}</td>
+                return (<tr id={value.id}>
+                            <td scope="row">{value.num}</td>
                             <td><Link className="link" to="">
                                     {value.name}
                                 </Link></td>
