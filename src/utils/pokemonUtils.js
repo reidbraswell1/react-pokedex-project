@@ -64,4 +64,36 @@ const getPokemonNames = (list) => {
     return pokemonNamesId;
 }
 
-export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames };
+const processSubmission = (event) => {
+    event.preventDefault();
+    console.log(`Event`,event.target[0].value);
+    console.log(document.getElementById("pokemon-name").selected);
+    const pokemonName = document.getElementById("pokemon-name");
+    let pokemonSelectedNamesArray = [];
+    for (let i=0,count=0; i<pokemonName.options.length; i++) { 
+        if (pokemonName.options[i].selected) {
+            pokemonSelectedNamesArray[count] = pokemonName.options[i].value;
+            count++; 
+        } 
+    }
+    const pokemonType = document.getElementById("pokemon-type");
+    let pokemonSelectedTypesArray = [];
+    for (let i=0,count=0; i<pokemonType.options.length; i++) { 
+        if (pokemonType.options[i].selected) {
+            pokemonSelectedTypesArray[count] = pokemonType.options[i].value;
+            count++; 
+        } 
+    }
+    const pokemonWeakness = document.getElementById("pokemon-weakness");
+    let pokemonSelectedWeaknessesArray = [];
+    for (let i=0,count=0; i<pokemonWeakness.options.length; i++) { 
+        if (pokemonWeakness.options[i].selected) {
+            pokemonSelectedWeaknessesArray[count] = pokemonWeakness.options[i].value;
+            count++; 
+        } 
+    }
+    console.log(`PokemonSelectedArray=`,pokemonSelectedNamesArray);
+    console.log(`PokemonSelectedTypes=`,pokemonSelectedTypesArray);
+    console.log(`PokemonSelectedWeaknesses=`,pokemonSelectedWeaknessesArray);
+}
+export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames, processSubmission };
