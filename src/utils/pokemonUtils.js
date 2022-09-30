@@ -1,4 +1,4 @@
-const derivePokemonWeaknesses = (list) => {
+const getPokemonWeaknesses = (list) => {
 
     console.log(`---Begin Function derivePokemonWeaknesses()---`);
 
@@ -21,7 +21,7 @@ const derivePokemonWeaknesses = (list) => {
     return pokemonWeaknesses;
 }
 
-const derivePokemonTypes = (list) => {
+const getPokemonTypes = (list) => {
     console.log(`---Begin Function derivePokemonTypes()---`);
 
     console.log(`List`,list);
@@ -43,4 +43,24 @@ const derivePokemonTypes = (list) => {
     return pokemonTypes;
 }
 
-export { derivePokemonWeaknesses, derivePokemonTypes };
+const getPokemonNames = (list) => {
+    console.log(`---Begin Function derivePokemonNames()---`);
+
+    console.log(`List`,list);
+    let pokemonNames = [];
+
+    list.forEach((element) => {
+            if(pokemonNames.includes(element.name)) {
+
+            }
+            else {
+                pokemonNames.push(element.name);
+            }
+    });
+    console.log(`PokemonNames=`,pokemonNames);
+    console.log(`---End Function derivePokemonNames()---`);
+    pokemonNames.sort();
+    return pokemonNames;
+}
+
+export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames };
