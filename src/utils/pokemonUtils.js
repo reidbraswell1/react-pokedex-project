@@ -1,8 +1,7 @@
 const getPokemonWeaknesses = (list) => {
 
-    console.log(`---Begin Function derivePokemonWeaknesses()---`);
+    console.log(`---Begin Function getPokemonWeaknesses()---`);
 
-    console.log(`List`,list);
     let pokemonWeaknesses = [];
 
     list.forEach((element) => {
@@ -15,16 +14,15 @@ const getPokemonWeaknesses = (list) => {
             }
         });
     })
-    console.log(`PokemonWeaknesses=`,pokemonWeaknesses);
-    console.log(`---End Function derivePokemonWeaknesses()---`);
     pokemonWeaknesses.sort();
+    console.log(`---End Function getPokemonWeaknesses()---`);
+    
     return pokemonWeaknesses;
 }
 
 const getPokemonTypes = (list) => {
-    console.log(`---Begin Function derivePokemonTypes()---`);
+    console.log(`---Begin Function getPokemonTypes()---`);
 
-    console.log(`List`,list);
     let pokemonTypes = [];
 
     list.forEach((element) => {
@@ -37,30 +35,33 @@ const getPokemonTypes = (list) => {
             }
         });
     })
-    console.log(`PokemonTypes=`,pokemonTypes);
-    console.log(`---End Function derivePokemonTypes()---`);
+
+    console.log(`---End Function getPokemonTypes()---`);
     pokemonTypes.sort();
     return pokemonTypes;
 }
 
 const getPokemonNames = (list) => {
-    console.log(`---Begin Function derivePokemonNames()---`);
+    console.log(`---Begin Function getPokemonNames()---`);
 
-    console.log(`List`,list);
-    let pokemonNames = [];
+    let pokemonNamesId = [];
 
     list.forEach((element) => {
-            if(pokemonNames.includes(element.name)) {
+            if('name' in pokemonNamesId) {
+                if(pokemonNamesId.name.includes(element.name)) {
 
+                }
             }
             else {
-                pokemonNames.push(element.name);
+                pokemonNamesId.push({"id":element.id, "name":element.name});
             }
     });
-    console.log(`PokemonNames=`,pokemonNames);
-    console.log(`---End Function derivePokemonNames()---`);
-    pokemonNames.sort();
-    return pokemonNames;
+    console.log(`---End Function getPokemonNames()---`);
+
+    pokemonNamesId.sort((a,b) => {
+        return b.name < a.name;
+    });
+    return pokemonNamesId;
 }
 
 export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames };
