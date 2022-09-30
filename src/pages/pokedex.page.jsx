@@ -8,6 +8,7 @@ import Footer from "../components/footer.jsx";
 import UnorderedList from "../components/unorderedList.jsx";
 import Table from "../components/table.jsx";
 import { getPokemonTypes, getPokemonWeaknesses, getPokemonNames } from "../utils/pokemonUtils.js";
+import { HomePage } from "../views/home.jsx"
 
 // Pokedex Page Main Function
 const PokedexPage = (props) => {
@@ -17,6 +18,7 @@ const PokedexPage = (props) => {
     const [ pokedexList, setPokedexList ] = useState({"pokemon":[{}]});
     const [ types, setTypes ] = useState([]);
     const [ weaknesses, setWeaknesses ] = useState([]);
+    const [ names, setNames ] = useState([]);
     const [ errorText, setErrorText ] = useState("");
     const [ errorTest, setErrorTest ] = useState(false);
     //const [ searchDirector, setSearchDirector ] = useState("All");
@@ -62,6 +64,7 @@ const PokedexPage = (props) => {
                 console.log(`Names=`,names);
                 setWeaknesses(weaknesses);
                 setTypes(types);
+                setNames(names);
                 setErrorText("");
             })
             .catch((err) => { 
@@ -88,7 +91,7 @@ const PokedexPage = (props) => {
                 <p className="error"><span className="color-red">{errorText}</span></p>
             </div>
         </div>
-
+<HomePage names={names} types={types} weaknesses={weaknesses}></HomePage>
         <div className="row">
             <div className="col-5 my-center">
                 <Footer></Footer>
