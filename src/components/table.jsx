@@ -34,8 +34,8 @@ const Table = (props) => {
                             <td>{types}</td>
                             <td>{weaknesses}</td>
                             <td>
-                                <Link className="imgLink" to="">
-                                <img className="border border-rounded" style={{marginLeft:".5rem", padding:"2px"}} width="35rem" src={value.img}></img>
+                                <Link className="" to={`/Details/${value.id}`}>
+                                <img className="border rounded imgLink" style={{marginLeft:".5rem", padding:"2px"}} src={value.img} width="40rem"></img>
                                 </Link>
                             </td>
                     </tr>  
