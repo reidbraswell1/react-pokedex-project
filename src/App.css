@@ -36,7 +36,8 @@ a {
 }
 
 .imgLink:hover {
-  border: 1px solid blue !important;
+  border: 2px solid blue !important;
+  border-radius: 15%;
 }
 
 .link {
