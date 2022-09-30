@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Footer from "../components/footer.jsx";
 import UnorderedList from "../components/unorderedList.jsx";
 import Table from "../components/table.jsx";
-import { derivePokemonTypes, derivePokemonWeaknesses } from "../utils/pokemonUtils.js";
+import { getPokemonTypes, getPokemonWeaknesses, getPokemonNames } from "../utils/pokemonUtils.js";
 
 // Pokedex Page Main Function
 const PokedexPage = (props) => {
@@ -54,10 +54,12 @@ const PokedexPage = (props) => {
             .then((data) => {
                 console.log(`Data=`,data);
                 setPokedexList(data);
-                let weaknesses = derivePokemonWeaknesses(data.pokemon);
-                let types = derivePokemonTypes(data.pokemon);
+                let weaknesses = getPokemonWeaknesses(data.pokemon);
+                let types = getPokemonTypes(data.pokemon);
+                let names = getPokemonNames(data.pokemon);
                 console.log(`Weaknesses=`,weaknesses);
                 console.log(`Types=`,types);
+                console.log(`Names=`,names);
                 setWeaknesses(weaknesses);
                 setTypes(types);
                 setErrorText("");
