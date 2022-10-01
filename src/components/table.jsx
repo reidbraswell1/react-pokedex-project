@@ -26,7 +26,7 @@ const Table = (props) => {
                             <td>{value.weaknesses.toString()}</td>
                             <td>
                                 <Link className="" to={`/Details/${value.id}`}>
-                                <img className="border rounded imgLink" style={{marginLeft:".5rem", padding:"2px"}} src={value.img} width="40rem"></img>
+                                <img className="border rounded imgLink" style={{marginLeft:".5rem", padding:"2px"}} src={value.img} alt="Pokemon" width="40rem"></img>
                                 </Link>
                             </td>
                     </tr>  
