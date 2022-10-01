@@ -96,4 +96,5 @@ const processSubmission = (event) => {
     console.log(`PokemonSelectedTypes=`,pokemonSelectedTypesArray);
     console.log(`PokemonSelectedWeaknesses=`,pokemonSelectedWeaknessesArray);
 }
+
 export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames, processSubmission };
