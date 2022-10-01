@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Routes } from "react-router-dom";
@@ -6,12 +6,76 @@ import { Route } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import "./App.css";
 import { PokedexPage } from "./pages/pokedex.page.jsx";
-//import { FilmsPage } from "./pages/films.page.jsx";
-//import { SingleFilmPage } from "./pages/singlefilm.page.jsx"
-function App(props) {
+import { HomePage } from "./views/Home.jsx";
+import { DetailsView } from "./views/Details.jsx";
+import { getPokemonNames } from "./utils/pokemonUtils";
+import { getPokemonTypes } from "./utils/pokemonUtils";
+import { getPokemonWeaknesses } from "./utils/pokemonUtils";
+
+const App = (props) => {
 
   //const { pathname } = useLocation();
   console.log(`---Begin Function App()---`);
+  console.log(`Props=`,props);
+
+  const [ pokedexList, setPokedexList ] = useState({"pokemon":[{"id":"0","num":"000","name":"Name","type":["Type"],"weaknesses":["Weaknesses"],"img":"https://static.vecteezy.com/system/resources/previews/000/440/566/original/vector-picture-icon.jpg"}]});
+  const [ types, setTypes ] = useState([]);
+  const [ weaknesses, setWeaknesses ] = useState([]);
+  const [ names, setNames ] = useState([{"id":0,"name":""}]);
+  const [ errorText, setErrorText ] = useState("");
+  const [ errorTest, setErrorTest ] = useState(false);
+  
+  useEffect(() => {
+    console.log(`---Begin useEffect()---`);
+    getPokedexList();
+    console.log(`---End useEffect()---`)
+  },[]);
+
+  const getPokedexList = () => {
+    console.log(`---Begin Function getPokedexList()---`);
+
+    const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
+    const GOOD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
+    let URL = "";
+
+    // Set URL to the good url or bad based on the errTest prop
+    if(errorTest) {
+        URL = BAD_URL;
+    }
+    else {
+        URL = GOOD_URL;
+    }
+    fetch(URL)
+        .then((response) => {
+            if(response.ok) { 
+                return response.json()
+            }
+            else {
+                throw new Error("Unknown Network Error Has Occurred");
+            }
+        })
+        .then((data) => {
+            console.log(`Data=`,data);
+            setPokedexList(data);
+            let weaknesses = getPokemonWeaknesses(data.pokemon);
+            let types = getPokemonTypes(data.pokemon);
+            let names = getPokemonNames(data.pokemon);
+            console.log(`Weaknesses=`,weaknesses);
+            console.log(`Types=`,types);
+            console.log(`Names=`,names);
+            setWeaknesses(weaknesses);
+            setTypes(types);
+            setNames(names);
+            setErrorText("");
+        })
+        .catch((err) => { 
+            console.log(`${err} fetching from URL: ${URL}`);
+            //setList([]);
+            setErrorText(`${err} fetching from URL: ${URL}`);
+        });
+    console.log(`---End Function getPokedexList()---`);
+  }
+  console.log(`---End Function App()---`);
 
   return (
     <BrowserRouter>
@@ -26,7 +90,9 @@ function App(props) {
         </ul>
       </nav>
       <Routes>
-        <Route exact path="/" element={<PokedexPage></PokedexPage>}></Route>
+        <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
+        <Route exact path="/form" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses}></HomePage>}></Route>
+        <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
   )
