@@ -1,8 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { BrowserRouter, NavLink, Redirect, Routes, Route } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import "./App.css";
 import { PokedexPage } from "./pages/pokedex.page.jsx";
@@ -90,9 +87,9 @@ const App = (props) => {
         </ul>
       </nav>
       <Routes>
-        <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
-        <Route exact path="/form" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses}></HomePage>}></Route>
-        <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
+          <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
+          <Route exact path="/form" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonList={pokedexList}></HomePage>}></Route>
+          <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
   )
