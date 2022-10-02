@@ -107,12 +107,12 @@ const processSubmission = (event) => {
 const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemonList=[{"name":"","type":"","weaknesses":""}]) => {
     
     console.log(`---Begin filterPokemon()---`);
-
+    
     let filteredPokemonList = filterPokemonName(filterProps.name, pokemonList);
-    //    filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
-    //    filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
+        filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
+        filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
 
-    console.log(`FilteredPokemonList=`,filteredPokemonList);
+    //console.log(`FilteredPokemonList=`,filteredPokemonList);
     console.log(`---End Function filterPokemon()---`);
     return filteredPokemonList;
 }
@@ -138,36 +138,52 @@ const filterPokemonName = (nameProps=[], pokemonList=[{"id":""}]) => {
 
 }
 
-const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":""}]) => {
+const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":[]}]) => {
 
-    let filteredPokemonList = [];
+    console.log(`---Begin Function filterPokemonType()---`);
+
+    let filteredPokemonList = [{}];
     if(typeProps.length === 1 && typeProps[0]==="All") {
         return pokemonList;
     }
+
     for(let i=0; i<pokemonList.length; i++) {
-        for(let j=0; j<typeProps.length; j++) {
-            if(pokemonList[i].type.toString() === typeProps[j].toString()) {
-                filteredPokemonList.push(pokemonList[i]);
+        for(let j=0; j<pokemonList[i].type.length; j++) {
+            for(let k=0; k<typeProps.length; k++) {
+                if(pokemonList[i].type[j].toString() === typeProps[k].toString()) {
+                    console.log(`Match ${k} PokemonList ${i}.type ${j} =`,pokemonList[i].type[j],` TypeProps ${k} =`,typeProps[k]);
+                    filteredPokemonList.push(pokemonList[i]);
+                }
             }
         }
     }
+    console.log(`FilteredTypes=`,filteredPokemonList);
+    console.log(`---End Function filterPokemonType()---`);
     return filteredPokemonList;
 
 }
 
 const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""}]) => {
 
+    console.log(`---Begin Function filterPokemonWeaknesses()---`);
+
     let filteredPokemonList = [];
     if(weaknessProps.length === 1 && weaknessProps[0]==="All") {
         return pokemonList;
     }
+
     for(let i=0; i<pokemonList.length; i++) {
-        for(let j=0; j<weaknessProps.length; j++) {
-            if(pokemonList[i].weaknesses === weaknessProps[j]) {
-                filteredPokemonList.push(pokemonList[i]);
+        for(let j=0; j<pokemonList[i].weaknesses.length; j++) {
+            for(let k=0; k<weaknessProps.length; k++) {
+                if(pokemonList[i].weaknesses[j].toString() === weaknessProps[k].toString()) {
+                    console.log(`Match ${k} PokemonList ${i}.weaknesses ${j} =`,pokemonList[i].weaknesses[j],` WeaknessProps ${k} =`,weaknessProps[k]);
+                    filteredPokemonList.push(pokemonList[i]);
+                }
             }
         }
     }
+    console.log(`FilteredWeaknesses=`,filteredPokemonList);
+    console.log(`---End Function filterPokemonWeaknesses()---`);
     return pokemonList;
 
 }
