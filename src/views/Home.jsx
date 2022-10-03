@@ -92,7 +92,7 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-name-${index}`} value={value.id}>{value.name}</option>)
                                     })}
                                 </select>
-                                <div class="text-center border">
+                                <div class="text-center border mt-2 background-color-white">
                                     <button className="reset-link" id="pokemon-name-reset" onClick={resetLinks}>Reset</button>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-type-${index}`} value={value}>{value}</option>)
                                     })}
                                 </select>
-                                <div class="text-center border">
+                                <div class="text-center border mt-2 background-color-white">
                                     <button className="reset-link" id="pokemon-type-reset" onClick={resetLinks}>Reset</button>
                                 </div>
                             </div>
@@ -116,11 +116,11 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-weakness-${index}`} value={value}>{value}</option>)
                                     })}
                                 </select>
-                                <div class="text-center border">
+                                <div class="text-center border mt-2 background-color-white">
                                     <button className="reset-link" id="pokemon-weakness-reset" onClick={resetLinks}>Reset</button>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
                         </form>
                     </div>
                 </div>
