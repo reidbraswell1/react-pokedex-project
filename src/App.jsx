@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import "./App.css";
 import { PokedexPage } from "./pages/pokedex.page.jsx";
 import { HomePage } from "./views/Home.jsx";
+import { Results } from "./views/Results.jsx";
 import { DetailsView } from "./views/Details.jsx";
 import { getPokemonNames } from "./utils/pokemonUtils";
 import { getPokemonTypes } from "./utils/pokemonUtils";
@@ -81,14 +82,14 @@ const App = (props) => {
           <li id="nav-item-home" className="nav-item">
             <NavLink className={({isActive}) => (isActive ? "nav-link color-white active" : "nav-link color-white not-active")} to="/" end>Home</NavLink>
           </li>
-          <li id="nav-item-films" className="nav-item">
-            <NavLink className={({isActive}) => (isActive ? "nav-link color-white active" : "nav-link color-white not-active")} to="/films">Films</NavLink>
-          </li>
         </ul>
       </nav>
       <Routes>
+        {/*
           <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
-          <Route exact path="/form" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonList={pokedexList}></HomePage>}></Route>
+        */}
+          <Route exact path="/" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonList={pokedexList}></HomePage>} end></Route>
+          <Route path="/results" element={<Results props={props.results}></Results>}></Route>
           <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
