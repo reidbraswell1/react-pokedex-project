@@ -14,7 +14,7 @@ const Results = (props) => {
         <div className="container">
             <div className="row">
                 <div className="col-4 my-center">
-                    <h1 className="color-white">Pokedex List</h1>
+                    <h1 className="color-white text-center">Pokemon List</h1>
                 </div>
             </div>
             <div className="row">
