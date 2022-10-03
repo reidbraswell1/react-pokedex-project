@@ -64,3 +64,9 @@ a:hover {
 .not-active {
   text-decoration: none !important;
 }
+
+.reset-link {
+  background: none;
+  color: blue;
+  border: none;
+}
