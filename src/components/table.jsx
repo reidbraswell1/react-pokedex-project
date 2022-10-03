@@ -7,7 +7,7 @@ const Table = (props) => {
     console.log(`---End Function Table()---`);
 
     return(<table className="table background-color-white">
-        <caption style={{captionSide:"top"}}>Table of Pokemons {props.pokemons.length} Returned</caption>
+        <caption className="text-center" style={{captionSide:"top"}}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
         <thead>
             <tr>
                 <th scope="col">Num</th>
