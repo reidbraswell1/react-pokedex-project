@@ -114,6 +114,9 @@ const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemo
 
     //console.log(`FilteredPokemonList=`,filteredPokemonList);
     console.log(`---End Function filterPokemon()---`);
+    filteredPokemonList.sort((a,b) => {
+        return b.name < a.name;
+    });
     return filteredPokemonList;
 }
 
