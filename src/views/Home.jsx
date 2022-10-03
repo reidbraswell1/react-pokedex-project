@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+//import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { filterPokemon } from "../utils/pokemonUtils";
 
@@ -7,6 +8,7 @@ const HomePage = (props) => {
 
     console.log(`---Begin Function HomePage()---`);
     console.log(`Props`,props);
+    const navigate = useNavigate();
 
     const [ results, setResults ] = useState([]);
 
@@ -14,6 +16,8 @@ const HomePage = (props) => {
         console.log(`---Begin Function useEffect()---`);
         console.log(results);
         console.log(results.length);
+
+        //navigate("/results",{state:{results},replace:true})
         console.log(`---Begin Function useEffect()---`);
     },[results])
 
@@ -52,6 +56,25 @@ const HomePage = (props) => {
         if(filteredPokemon.length > 0) {
             console.log("here");
             setResults(filteredPokemon);
+            navigate("/results",{state:filteredPokemon})
+        }
+    }
+
+    const resetLinks = (event) => {
+        event.preventDefault();
+        switch(event.target.id) {
+            case "pokemon-name-reset":
+                document.getElementById("pokemon-name").selectedIndex=0;
+                break;
+            case "pokemon-type-reset":
+                document.getElementById("pokemon-type").selectedIndex=0;
+                break;
+            case "pokemon-weakness-reset":
+                document.getElementById("pokemon-weakness").selectedIndex=0;
+                break;
+            default:
+                console.log(`Unknown Reset Event`,event.target.id);
+                break;     
         }
     }
 
@@ -69,7 +92,9 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-name-${index}`} value={value.id}>{value.name}</option>)
                                     })}
                                 </select>
-                                <p>Ctrl Selects Multiple Values</p>
+                                <div class="text-center border">
+                                    <button className="reset-link" id="pokemon-name-reset" onClick={resetLinks}>Reset</button>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label className="color-white" for="pokemonType">Pokemon Type</label>
@@ -79,7 +104,9 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-type-${index}`} value={value}>{value}</option>)
                                     })}
                                 </select>
-                                <p>Ctrl Selects Multiple Values</p>
+                                <div class="text-center border">
+                                    <button className="reset-link" id="pokemon-type-reset" onClick={resetLinks}>Reset</button>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label className="color-white" for="pokemonWeakness">Pokemon Weakness</label>
@@ -89,13 +116,18 @@ const HomePage = (props) => {
                                         return(<option id={`pokemon-weakness-${index}`} value={value}>{value}</option>)
                                     })}
                                 </select>
-                                <p>Ctrl Selects Multiple Values</p>
+                                <div class="text-center border">
+                                    <button className="reset-link" id="pokemon-weakness-reset" onClick={resetLinks}>Reset</button>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
-                {results.length > 0 ? <Navigate to="/"></Navigate>:<h1>test</h1>}
+                {/*
+                results.length > 0 && <Navigate to="/results" results={results} state={results}></Navigate>}
+                                */}
+                                
             </div>)
 }
 export { HomePage };
