@@ -142,7 +142,7 @@ const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":[]}]) => {
 
     console.log(`---Begin Function filterPokemonType()---`);
 
-    let filteredPokemonList = [{}];
+    let filteredPokemonList = [];
     if(typeProps.length === 1 && typeProps[0]==="All") {
         return pokemonList;
     }
@@ -184,7 +184,7 @@ const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""
     }
     console.log(`FilteredWeaknesses=`,filteredPokemonList);
     console.log(`---End Function filterPokemonWeaknesses()---`);
-    return pokemonList;
+    return filteredPokemonList;
 
 }
 
