@@ -32,7 +32,7 @@ const Results = (props) => {
             <div className="row">
                 <div className="col-5 my-center">
                     { location.state != null && 
-                        <Table pokemons={location.state.pokemons}></Table>
+                        <Table pokemons={location.state.pokemons} pokemonImages={location.state.pokemonImages}></Table>
                     }
                     { location.state != null &&
                         <div>
