@@ -117,6 +117,16 @@ const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemo
     filteredPokemonList.sort((a,b) => {
         return b.name < a.name;
     });
+    filteredPokemonList.forEach((element) => {
+        element.type.sort((a,b) => {
+            return b < a;
+        });
+    });
+    filteredPokemonList.forEach((element) => {
+        element.weaknesses.sort((a,b) => {
+            return b < a;
+        });
+    });    
     return filteredPokemonList;
 }
 
