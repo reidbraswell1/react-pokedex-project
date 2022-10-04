@@ -53,11 +53,25 @@ const HomePage = (props) => {
         console.log(`PokemonSelectedWeaknesses=`,pokemonSelectedWeaknessesArray);
         let filteredPokemon = filterPokemon({"name":pokemonSelectedNamesArray,"type":pokemonSelectedTypesArray,"weaknesses":pokemonSelectedWeaknessesArray},props.pokemonList.pokemon)
         console.log(`FilteredPokemonList=`,filteredPokemon);
+        let errorText = "";
+        let errorNames = "";
+        let errorTypes = "";
+        let errorWeaknesses = "";
         if(filteredPokemon.length > 0) {
-            console.log("here");
             setResults(filteredPokemon);
-            navigate("/results",{state:filteredPokemon})
         }
+        else {
+            let pokemonNames = [];
+            pokemonSelectedNamesArray.forEach((element,index) => {
+                
+                pokemonNames.push(props.pokemonNames[index].name);
+            })
+            errorText  = `No Data For Selected Filters:`;
+            errorNames = `Names: ${pokemonNames}`
+            errorTypes = `Types: ${pokemonSelectedTypesArray}`;
+            errorWeaknesses = `Types: ${pokemonSelectedWeaknessesArray}`;
+        }
+        navigate("/results",{state:{pokemons:filteredPokemon,errorText:errorText,errorNames:errorNames,errorTypes:errorTypes,errorWeaknesses:errorWeaknesses}});
     }
 
     const resetLinks = (event) => {
