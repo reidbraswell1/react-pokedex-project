@@ -71,7 +71,7 @@ const HomePage = (props) => {
             errorTypes = `Types: ${pokemonSelectedTypesArray}`;
             errorWeaknesses = `Types: ${pokemonSelectedWeaknessesArray}`;
         }
-        navigate("/results",{state:{pokemons:filteredPokemon,errorText:errorText,errorNames:errorNames,errorTypes:errorTypes,errorWeaknesses:errorWeaknesses}});
+        navigate("/results",{state:{pokemons:filteredPokemon,pokemonImages:props.pokemonImages,errorText:errorText,errorNames:errorNames,errorTypes:errorTypes,errorWeaknesses:errorWeaknesses}});
     }
 
     const resetLinks = (event) => {
