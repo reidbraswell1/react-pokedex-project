@@ -20,12 +20,12 @@ const Table = (props) => {
         <tbody>
         {props.pokemons.map((value, index, array) => {
                 return (<tr id={value.id}>
-                            <td>{value.num}</td>
-                            <td>{value.name}</td>
-                            <td>{value.type.toString()}</td>
-                            <td>{value.weaknesses.toString()}</td>
-                            <td>
-                                <Link className="" to={`/Details/${value.id}`} state={{"pokemon":value}}>
+                            <td key={index}>{value.num}</td>
+                            <td key={index}>{value.name}</td>
+                            <td key={index}>{value.type.toString()}</td>
+                            <td key={index}>{value.weaknesses.toString()}</td>
+                            <td key={index}>
+                                <Link className="" to={`/Details/${value.id}`} state={{"pokemon":value,"pokemonImages":props.pokemonImages}}>
                                 <img className="border rounded imgLink" style={{marginLeft:".5rem", padding:"2px"}} src={value.img} alt="Pokemon" width="40rem"></img>
                                 </Link>
                             </td>
