@@ -21,17 +21,18 @@ const DetailsView = (props) => {
                 </div>
                 {pokemon != null &&
                 <div className="row">
-                    <div className="col-9 border my-center">
+                    <div className="col-sm border my-center">
                         <div className="row">
-                            <div className="col-3 border">
-                                <img src={pokemon.img} width="100%" alt="Pokemon"></img>
-                            </div>
-                            <div className="col border">
+                            <div className="col-4 border">
+                                <img src={pokemon.img} width="90%" alt="Pokemon"></img>
                                 <p>Num: {pokemon.num}<br></br>
                                     Name: {pokemon.name}<br></br>
                                     Type: {pokemon.type.toString()}<br></br>
                                     Weaknesses: {pokemon.weaknesses.toString()}<br></br>
-                                    Height: {pokemon.height}<br></br>
+                                </p>
+                            </div>
+                            <div className="col border">
+                                <p> Height: {pokemon.height}<br></br>
                                     Weight: {pokemon.weight}<br></br>
                                     Candy: {pokemon.candy}<br></br>
                                     Candy Count: {pokemon.candy_count}<br></br>
