@@ -64,6 +64,30 @@ const getPokemonNames = (list=[{"id":"0","name":""}]) => {
     return pokemonNamesId;
 }
 
+const getPokemonImages = (list=[{"id":"0","img":""}]) => {
+    console.log(`---Begin Function getPokemonImages()---`);
+
+    let pokemonImagesId = [];
+
+    list.forEach((element) => {
+            if('name' in pokemonImagesId) {
+                if(pokemonImagesId.name.includes(element.name)) {
+
+                }
+            }
+            else {
+                pokemonImagesId.push({"id":element.id, "img":element.img});
+            }
+    });
+    console.log(`---End Function getPokemonImages()---`);
+
+    pokemonImagesId.sort((a,b) => {
+        return b.id < a.id;
+    });
+    return pokemonImagesId;
+}
+
+
 /*
 const processSubmission = (event) => {
 
@@ -201,4 +225,4 @@ const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""
 
 }
 
-export { getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
+export { getPokemonImages, getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
