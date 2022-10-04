@@ -9,6 +9,7 @@ import { DetailsView } from "./views/Details.jsx";
 import { getPokemonNames } from "./utils/pokemonUtils";
 import { getPokemonTypes } from "./utils/pokemonUtils";
 import { getPokemonWeaknesses } from "./utils/pokemonUtils";
+import { getPokemonImages } from "./utils/pokemonUtils";
 
 const App = (props) => {
 
@@ -20,6 +21,7 @@ const App = (props) => {
   const [ types, setTypes ] = useState([]);
   const [ weaknesses, setWeaknesses ] = useState([]);
   const [ names, setNames ] = useState([{"id":0,"name":""}]);
+  const [ images, setImages ] = useState([{"id":0,"img":""}]);
   const [ errorText, setErrorText ] = useState("");
   const [ errorTest, setErrorTest ] = useState(false);
   
@@ -58,12 +60,15 @@ const App = (props) => {
             let weaknesses = getPokemonWeaknesses(data.pokemon);
             let types = getPokemonTypes(data.pokemon);
             let names = getPokemonNames(data.pokemon);
+            let images = getPokemonImages(data.pokemon);
             console.log(`Weaknesses=`,weaknesses);
             console.log(`Types=`,types);
             console.log(`Names=`,names);
+            console.log(`Images=`,images);
             setWeaknesses(weaknesses);
             setTypes(types);
             setNames(names);
+            setImages(images);
             setErrorText("");
         })
         .catch((err) => { 
@@ -88,7 +93,7 @@ const App = (props) => {
         {/*
           <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
         */}
-          <Route exact path="/" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonList={pokedexList}></HomePage>} end></Route>
+          <Route exact path="/" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonImages={images} pokemonList={pokedexList}></HomePage>} end></Route>
           <Route path="/results" element={<Results props={props.results}></Results>}></Route>
           <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
