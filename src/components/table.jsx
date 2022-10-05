@@ -6,11 +6,11 @@ const Table = (props) => {
     console.log(`Props=`, props);
     console.log(`---End Function Table()---`);
 
-    return (<table className="table table-striped table-bordered background-color-white">
+    return (<table className="table table-striped table-bordered background-color-white w-auto">
         <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
         <thead>
             <tr key="results-heading">
-                <th className="w-12" scope="col">Num</th>
+                <th scope="col">Num</th>
                 <th scope="col">Name</th>
                 <th scope="col">Types</th>
                 <th scope="col">Weaknesses</th>
@@ -18,12 +18,14 @@ const Table = (props) => {
             </tr>
             <tr>
                 <td>
-                    <button>
-                        <i class="bi bi-sort-numeric-down"></i>
-                    </button>
-                    <button>
-                        <i class="bi bi-sort-numeric-up-alt"></i>
-                    </button>
+                    <div className="w-12">
+                        <button>
+                            <i class="bi bi-sort-numeric-down"></i>
+                        </button>
+                        <button>
+                            <i class="bi bi-sort-numeric-up-alt"></i>
+                        </button>
+                    </div>
                 </td>
                 <td>
                     <button>
