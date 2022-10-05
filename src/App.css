@@ -70,3 +70,7 @@ a:hover {
   color: blue;
   border: none;
 }
+
+table .w-12 {
+  width: 12%;
+}
