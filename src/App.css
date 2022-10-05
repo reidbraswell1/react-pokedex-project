@@ -71,6 +71,6 @@ a:hover {
   border: none;
 }
 
-table .w-12 {
-  width: 12%;
+.w-12 {
+  width: 5rem;
 }
