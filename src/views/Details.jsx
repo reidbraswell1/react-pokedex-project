@@ -1,12 +1,19 @@
 import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Navigate, Redirect, useLocation, useNavigate } from "react-router-dom";
+
+let mySeconds = 6;
+let timeout = null;
 
 const DetailsView = (props) => {
 
     console.log(`---Begin Function DetailsView()---`);
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [ seconds, setSeconds ] = useState(6);
+
+    
 
     console.log(`Location.state`, location.state);
 
@@ -26,13 +33,37 @@ const DetailsView = (props) => {
 
     useEffect(() => {
         console.log(`---Begin Function useEffect()---`);
+
         if (location.state === null) {
-            setTimeout(() => {
-                navigate("/");
-            }, 5000)
+           return () => {
+            console.log(`---Begin useEffect Callback Function Null State---`);
+            startInterval();
+            console.log(`---End useEffect Callback Function Null State---`);
+           }
+           //navigate("/");
+        }
+        return () => {
+            console.log(`---Begin useEffect Callback Function Non Null State---`);
+            console.log(`---End useEffect Callback Function Non Null State---`);
         }
         console.log(`---End Function useEffect()---`);
     }, [])
+
+    mySeconds = seconds;
+    const startInterval = () => {
+        
+          timeout = setInterval(() => {
+            setSeconds((seconds) => seconds - 1);
+            //mySeconds = mySeconds - 1
+            console.log("seconds: ", seconds); // seconds always return 6 but mySeconds the updated value
+            console.log("myseconds: ",mySeconds);
+            if(mySeconds < 1) {
+                clearInterval(timeout);
+                navigate("/");
+            }
+          },1000);
+    }
+  
 
     return (
         <div className="container-fluid">
@@ -113,43 +144,43 @@ const DetailsView = (props) => {
                                     <div className="row">
                                         <div className="col-5 my-center">
                                             {('next_evolution' in pokemon || 'prev_evolution' in pokemon) &&
-                                            <table className="table table-sm table-striped table-bordered background-color-white caption-top">
-                                                {'next_evolution' in pokemon &&
-                                                    <caption className="color-white text-center">Next Evolution:</caption>
-                                                }
-                                                {'prev_evolution' in pokemon &&
-                                                    <caption className="color-white text-center">Prev Evolution:</caption>
-                                                }
-                                                <thead>
-                                                    <tr key="heading-next-evolution">
-                                                        <th scope="col">Num</th>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Image</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="">
+                                                <table className="table table-sm table-striped table-bordered background-color-white caption-top">
                                                     {'next_evolution' in pokemon &&
-                                                        pokemon.next_evolution.map((value, index, array) => {
-                                                            let id = parseInt(value.num);
-                                                            console.log(`Id=`, id);
-                                                            return (<tr key={`heading-next-evolution-${index}`}>
-                                                                <td>{value.num}</td>
-                                                                <td>{value.name}</td>
-                                                                <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
-                                                            </tr>)
-                                                        })}
+                                                        <caption className="color-white text-center">Next Evolution:</caption>
+                                                    }
                                                     {'prev_evolution' in pokemon &&
-                                                        pokemon.prev_evolution.map((value, index, array) => {
-                                                            let id = parseInt(value.num);
-                                                            console.log(`Id=`, id);
-                                                            return (<tr key={`heading-prev-evolution-${index}`}>
-                                                                <td>{value.num}</td>
-                                                                <td>{value.name}</td>
-                                                                <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
-                                                            </tr>)
-                                                        })}
-                                                </tbody>
-                                            </table>
+                                                        <caption className="color-white text-center">Prev Evolution:</caption>
+                                                    }
+                                                    <thead>
+                                                        <tr key="heading-next-evolution">
+                                                            <th scope="col">Num</th>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Image</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="">
+                                                        {'next_evolution' in pokemon &&
+                                                            pokemon.next_evolution.map((value, index, array) => {
+                                                                let id = parseInt(value.num);
+                                                                console.log(`Id=`, id);
+                                                                return (<tr key={`heading-next-evolution-${index}`}>
+                                                                    <td>{value.num}</td>
+                                                                    <td>{value.name}</td>
+                                                                    <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                </tr>)
+                                                            })}
+                                                        {'prev_evolution' in pokemon &&
+                                                            pokemon.prev_evolution.map((value, index, array) => {
+                                                                let id = parseInt(value.num);
+                                                                console.log(`Id=`, id);
+                                                                return (<tr key={`heading-prev-evolution-${index}`}>
+                                                                    <td>{value.num}</td>
+                                                                    <td>{value.name}</td>
+                                                                    <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                </tr>)
+                                                            })}
+                                                    </tbody>
+                                                </table>
                                             }
                                         </div>
                                     </div>
@@ -161,8 +192,9 @@ const DetailsView = (props) => {
             }
             {location.state === null &&
                 <div>
-                    <h1>location.state is null redirecting to Home page in 5 seconds</h1>
-
+                    <h1>location.state is null redirecting to Home page in 
+                        <span id="counter" style={{"color":"red"}}> {mySeconds}</span> seconds
+                    </h1>
                 </div>
             }
         </div>
