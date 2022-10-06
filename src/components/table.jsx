@@ -1,9 +1,29 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Table = (props) => {
 
     console.log(`---Begin Function Table()---`);
     console.log(`Props=`, props);
+
+    useEffect(() => {
+
+    })
+
+    const processSort = (event) => {
+        console.log(`Begin Function processSort()---`);
+        console.log(`Event.id=`,event.target.id);
+        switch(event.target.id) {
+            case "numeric-sort-down":
+                break;
+            case "numeric-sort-up":
+                break;
+            default:
+                break;
+        }
+        console.log(`End Function processSort()---`);
+    }
+
     console.log(`---End Function Table()---`);
 
     return (<table className="table table-striped table-bordered background-color-white w-auto">
@@ -19,11 +39,11 @@ const Table = (props) => {
             <tr>
                 <td>
                     <div className="w-12">
-                        <button>
-                            <i class="bi bi-sort-numeric-down"></i>
+                        <button value="numericSortDown" onClick={processSort}>
+                            <i id="numeric-sort-down" class="bi bi-sort-numeric-down"></i>
                         </button>
-                        <button>
-                            <i class="bi bi-sort-numeric-up-alt"></i>
+                        <button value="numericSortUp" onClick={processSort}>
+                            <i id="numeric-sort-up" class="bi bi-sort-numeric-up-alt"></i>
                         </button>
                     </div>
                 </td>
