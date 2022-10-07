@@ -89,11 +89,23 @@ const Table = (props) => {
         <tbody>
             {pokemon.map((value, index, array) => {
                 return (<tr key={`results-details-tr-${index}`} id={`results-details-tr-${index}`}>
-                    <td key={`results-details-td-1`}>{value.num}</td>
-                    <td key={`results-details-td-2`}>{value.name}</td>
-                    <td key={`results-details-td-3`}>{value.type.toString()}</td>
-                    <td key={`results-details-td-4`}>{value.weaknesses.toString()}</td>
-                    <td key={`results-details-td-5`}>
+                    <td key={`td-${index}-1`}>{value.num}</td>
+                    <td key={`td-${index}-2`}>{value.name}</td>
+                    <td key={`td-${index}-3`}>{value.type.map((type, index2, array2) => {
+                        return props.type.indexOf(type) < 0 ? 
+                                (index2 < value.type.length-1 ? `${type}, ` : `${type}`) :
+                                (index2 < value.type.length-1 ? <u>{type}, </u> : <u>{type}</u>)
+                                                }
+                                            )}
+                    </td>
+                    <td key={`td-${index}-4`}>{value.weaknesses.map((weakness,index3,array) => {
+                        return props.weaknesses.indexOf(weakness) < 0 ? 
+                                      (index3 < value.weaknesses.length-1 ? `${weakness}, ` : `${weakness}`) :
+                                      (index3 < value.weaknesses.length-1 ? <u>{weakness}, </u> : <u>{weakness}</u>)
+                                      
+                        }
+                    )}</td>
+                    <td key={`td-${index}-5`}>
                         <Link className="" to={`/Details/${value.id}`} state={{ "pokemon": value, "pokemonImages": props.pokemonImages }}>
                             <img className="border rounded imgLink mx-auto d-block" style={{ marginLeft: ".5rem", padding: "2px" }} src={value.img} alt="Pokemon" width="40rem" loading="lazy"></img>
                         </Link>
