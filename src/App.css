@@ -74,3 +74,7 @@ a:hover {
 .w-12 {
   width: 5rem;
 }
+
+.first-letter::first-letter {
+  text-transform: uppercase;
+}
