@@ -52,7 +52,7 @@ const Table = (props) => {
 
     console.log(`---End Function Table()---`);
 
-    return (<table className="table table-striped table-bordered background-color-white w-auto">
+    return (<table className="table table-striped table-bordered background-color-white w-auto mx-auto">
         <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
         <thead>
             <tr key="results-heading">
