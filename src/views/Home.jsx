@@ -48,7 +48,7 @@ const HomePage = (props) => {
                 count++; 
             } 
         }
-        console.log(`PokemonSelectedArray=`,pokemonSelectedNamesArray);
+        console.log(`PokemonSelectedNames=`,pokemonSelectedNamesArray);
         console.log(`PokemonSelectedTypes=`,pokemonSelectedTypesArray);
         console.log(`PokemonSelectedWeaknesses=`,pokemonSelectedWeaknessesArray);
         let filteredPokemon = filterPokemon({"name":pokemonSelectedNamesArray,"type":pokemonSelectedTypesArray,"weaknesses":pokemonSelectedWeaknessesArray},props.pokemonList.pokemon)
@@ -67,9 +67,9 @@ const HomePage = (props) => {
                 pokemonNames.push(props.pokemonNames[index].name);
             })
             errorText  = `No Data For Selected Filters:`;
-            errorNames = `Names: ${pokemonNames}`
+            errorNames = `Names: ${pokemonSelectedNamesArray}`
             errorTypes = `Types: ${pokemonSelectedTypesArray}`;
-            errorWeaknesses = `Types: ${pokemonSelectedWeaknessesArray}`;
+            errorWeaknesses = `Weaknesses: ${pokemonSelectedWeaknessesArray}`;
         }
         navigate("/results",{state:{pokemons:filteredPokemon,pokemonImages:props.pokemonImages,errorText:errorText,errorNames:errorNames,errorTypes:errorTypes,errorWeaknesses:errorWeaknesses}});
     }
