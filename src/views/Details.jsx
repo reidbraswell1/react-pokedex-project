@@ -1,6 +1,7 @@
 import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 import { React, useEffect, useState } from "react";
 import { Navigate, Redirect, useLocation, useNavigate } from "react-router-dom";
+import Footer from "../components/footer";
 
 let mySeconds = 6;
 let timeout = null;
@@ -70,15 +71,15 @@ const DetailsView = (props) => {
             {location.state != null &&
                 <div>
                     <div className="row">
-                        <div className="col-4 mx-auto border">
+                        <div className="col-4 mx-auto">
                             <h1 className="color-white text-center">{pokemon.name} Details</h1>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-sm border">
+                        <div className="col-sm">
                             <div class="row">
-                                <div class="col-7 mx-auto border">
-                                    <img className="border mx-auto d-block" src={pokemon.img} alt="Pokemon"></img>
+                                <div class="col-7 mx-auto">
+                                    <img className="mx-auto d-block" src={pokemon.img} alt="Pokemon"></img>
                                     <table className="table table-sm table-striped table-bordered background-color-white caption-top">
                                         <caption className="color-white text-center">Property Value</caption>
                                         <thead>
@@ -88,57 +89,13 @@ const DetailsView = (props) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr key="property-value-1">
-                                                <td>Num:</td>
-                                                <td>{pokemon.num}</td>
-                                            </tr>
-                                            <tr key="property-value-2">
-                                                <td>Name:</td>
-                                                <td>{pokemon.name}</td>
-                                            </tr>
-                                            <tr key="property-value-3">
-                                                <td>Type:</td>
-                                                <td>{pokemon.type.toString()}</td>
-                                            </tr>
-                                            <tr key="property-value-4">
-                                                <td>Weaknesses:</td>
-                                                <td>{pokemon.weaknesses.toString()}</td>
-                                            </tr>
-                                            <tr key="property-value-5">
-                                                <td>Height</td>
-                                                <td>{pokemon.height}</td>
-                                            </tr>
-                                            <tr key="property-value-6">
-                                                <td>Weight</td>
-                                                <td>{pokemon.weight}</td>
-                                            </tr>
-                                            <tr key="property-value-7">
-                                                <td>Candy</td>
-                                                <td>{pokemon.candy}</td>
-                                            </tr>
-                                            <tr key="property-value-8">
-                                                <td>Candy Count</td>
-                                                <td>
-                                                    {'candy_count' in pokemon &&
-                                                        <span>{pokemon.candy_count}</span>
-                                                    }
-                                                    {!'candy_count' in pokemon &&
-                                                        <span>--N/A--</span>
-                                                    }
-                                                </td>
-                                            </tr>
-                                            <tr key="property-value-9">
-                                                <td>Egg</td>
-                                                <td>{pokemon.egg}</td>
-                                            </tr>
-                                            <tr key="property-value-10">
-                                                <td>Average Spawns</td>
-                                                <td>{pokemon.avg_spawns}</td>
-                                            </tr>
-                                            <tr key="property-value-11">
-                                                <td>Spawn Chance</td>
-                                                <td>{pokemon.spawn_chance}</td>
-                                            </tr>
+                                        {Object.keys(pokemon).map((key, index, array) => {
+                                            console.log(`Key =`,key, `Value =`,pokemon[key])
+                                                return (<tr key={`tr-${index}`}>
+                                                    <td key={`td-${index}-1`} className="first-letter">{key}:</td>
+                                                    <td key={`td-${index}-2`}>{pokemon[key] === null ? "Null": typeof pokemon[key] === "object" ? JSON.stringify(pokemon[key]): pokemon[key].toString()}</td>
+                                                </tr>)
+                                            })}
                                         </tbody>
                                     </table>
                                     <div className="row">
@@ -166,7 +123,7 @@ const DetailsView = (props) => {
                                                                 return (<tr key={`heading-next-evolution-${index}`}>
                                                                     <td>{value.num}</td>
                                                                     <td>{value.name}</td>
-                                                                    <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                    <td><img className="mx-auto d-block" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
                                                                 </tr>)
                                                             })}
                                                         {'prev_evolution' in pokemon &&
@@ -176,7 +133,7 @@ const DetailsView = (props) => {
                                                                 return (<tr key={`heading-prev-evolution-${index}`}>
                                                                     <td>{value.num}</td>
                                                                     <td>{value.name}</td>
-                                                                    <td><img className="mx-auto d-block border" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                    <td><img className="mx-auto d-block" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
                                                                 </tr>)
                                                             })}
                                                     </tbody>
@@ -186,6 +143,7 @@ const DetailsView = (props) => {
                                     </div>
                                 </div>
                             </div>
+                            <Footer></Footer>
                         </div>
                     </div>
                 </div>
