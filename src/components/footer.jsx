@@ -6,7 +6,7 @@ function Footer(props) {
     const [ footerText, setFooterText ] = useState("React Pokedex Project 10/22");
     return (
         <div className="row mt-3">
-            <footer className="col-5 my-center footer">
+            <footer className="col-5 mx-auto text-center footer">
                 <span>{footerText}</span>
             </footer>
         </div>);
