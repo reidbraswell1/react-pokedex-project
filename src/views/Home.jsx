@@ -82,7 +82,7 @@ const HomePage = (props) => {
         filterTypes = `Types: ${pokemonSelectedTypesArray}`;
         filterWeaknesses = `Weaknesses: ${pokemonSelectedWeaknessesArray}`;
 
-        navigate("/results", { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses } });
+        navigate("/results", { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses, weaknesses: pokemonSelectedWeaknessesArray, type: pokemonSelectedTypesArray } });
     }
 
     const resetLinks = (event) => {
