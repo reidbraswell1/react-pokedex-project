@@ -94,10 +94,10 @@ const App = (props) => {
           <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
         */}
           <Route exact path="/" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonImages={images} pokemonList={pokedexList}></HomePage>} end></Route>
-          <Route path="/results" element={<Results props={props.results}></Results>}></Route>
-          <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
+          <Route path="/results/:ids/:types/:weaknesses" element={<Results pokedexList={pokedexList} props={props.results}></Results>}></Route>
+          <Route path="/Details/:id" element={<DetailsView name="Details_Page" pokedexList={pokedexList}></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
   )
-};
+}
 export default App;
