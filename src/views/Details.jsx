@@ -1,6 +1,6 @@
 import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 import { React, useEffect, useState } from "react";
-import { Navigate, Redirect, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Redirect, useLocation, useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 
 let mySeconds = 6;
@@ -9,6 +9,11 @@ let timeout = null;
 const DetailsView = (props) => {
 
     console.log(`---Begin Function DetailsView()---`);
+    console.log(`Props.pokedexList =`,props.pokedexList);
+
+    const params = useParams();
+
+    console.log(`Params.id =`,params.id)
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -68,6 +73,7 @@ const DetailsView = (props) => {
 
     return (
         <div className="container-fluid">
+            {/*
             {location.state != null &&
                 <div>
                     <div className="row">
@@ -83,7 +89,7 @@ const DetailsView = (props) => {
                                     <table className="table table-sm table-striped table-bordered background-color-white caption-top">
                                         <caption className="color-white text-center">Property Value</caption>
                                         <thead>
-                                            <tr key="propert-value-table">
+                                            <tr key="property-value-table">
                                                 <th scope="col">Property</th>
                                                 <th scope="col">Value</th>
                                             </tr>
@@ -155,6 +161,7 @@ const DetailsView = (props) => {
                     </h1>
                 </div>
             }
+        */}
         </div>
     )
 }
