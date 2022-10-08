@@ -87,12 +87,12 @@ const Table = (props) => {
             </tr>
         </thead>
         <tbody>
-            {pokemon.map((value, index, array) => {
+            {props.pokemons.map((value, index, array) => {
                 return (<tr key={`results-details-tr-${index}`} id={`results-details-tr-${index}`}>
                     <td key={`td-${index}-1`}>{value.num}</td>
                     <td key={`td-${index}-2`}>{value.name}</td>
                     <td key={`td-${index}-3`}>{value.type.map((type, index2, array2) => {
-                        return props.type.indexOf(type) < 0 ? 
+                        return props.types.indexOf(type) < 0 ? 
                                 (index2 < value.type.length-1 ? `${type}, ` : `${type}`) :
                                 (index2 < value.type.length-1 ? <u>{type}, </u> : <u>{type}</u>)
                                                 }
