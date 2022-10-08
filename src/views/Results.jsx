@@ -3,10 +3,25 @@ import { useNavigate } from "react-router-dom";
 import Table from "../components/table.jsx";
 import Footer from "../components/footer.jsx";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { type } from "@testing-library/user-event/dist/type/index.js";
 
 const Results = (props) => {
 
     console.log(`---Begin Function Results()---`);
+
+    const params = useParams();
+    console.log(`Props.pokedexList =`,props.pokedexList);
+    console.log(`Params.ids =`,params.ids);
+    console.log(`Params.types =`,params.types);
+    console.log(`Params.weaknesses =`,params.weaknesses);
+
+    let ids = params.ids.split(",");
+    let types = params.types.split(",");
+    let weaknesses = params.weaknesses.split(",");
+    console.log(`Ids =`,ids);
+    console.log(`Types =`,types);
+    console.log(`Weaknesses =`,weaknesses);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -32,7 +47,7 @@ const Results = (props) => {
             <div className="row">
                 <div className="col-7 mx-auto">
                     {location.state != null &&
-                        <Table pokemons={location.state.pokemons} pokemonImages={location.state.pokemonImages} weaknesses={location.state.weaknesses} type={location.state.type}></Table>
+                        <Table pokemons={props.pokedexList.pokemon} pokemonImages={location.state.pokemonImages} weaknesses={location.state.weaknesses} type={location.state.type}></Table>
                     }
                     <div className="row">
                         <div className="col-7 mx-auto">
