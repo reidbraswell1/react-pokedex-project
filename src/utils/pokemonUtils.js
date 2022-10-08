@@ -96,7 +96,7 @@ const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemo
         filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
 
     filteredPokemonList.sort((a,b) => {
-        return b.name < a.name;
+        return b.id < a.id;
     });
     filteredPokemonList.forEach((element) => {
         element.type.sort((a,b) => {
@@ -132,7 +132,6 @@ const filterPokemonName = (nameProps=[], pokemonList=[{"id":""}]) => {
     }
     console.log(`---End Function filterPokemonName()---`);
     return filteredPokemonList;
-
 }
 
 const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":[]}]) => {
@@ -148,8 +147,16 @@ const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":[]}]) => {
         for(let j=0; j<pokemonList[i].type.length; j++) {
             for(let k=0; k<typeProps.length; k++) {
                 if(pokemonList[i].type[j].toString() === typeProps[k].toString()) {
-                    console.log(`Match ${k} PokemonList ${i}.type ${j} =`,pokemonList[i].type[j],` TypeProps ${k} =`,typeProps[k]);
-                    filteredPokemonList.push(pokemonList[i]);
+                    // Don't add if already in list
+                    let found = false;
+                    filteredPokemonList.forEach((obj, idx, array) => {
+                        if(obj.id === pokemonList[i].id) {
+                            found = true;
+                        }
+                    })
+                    if(!found) {
+                        filteredPokemonList.push(pokemonList[i]);
+                    }
                 }
             }
         }
@@ -173,7 +180,16 @@ const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""
         for(let j=0; j<pokemonList[i].weaknesses.length; j++) {
             for(let k=0; k<weaknessProps.length; k++) {
                 if(pokemonList[i].weaknesses[j].toString() === weaknessProps[k].toString()) {
-                    filteredPokemonList.push(pokemonList[i]);
+                    // Don't add if already in list
+                    let found = false;
+                    filteredPokemonList.forEach((obj, idx, array) => {
+                        if(obj.id === pokemonList[i].id) {
+                            found = true;
+                        }
+                    })
+                    if(!found) {
+                        filteredPokemonList.push(pokemonList[i]);
+                    }
                 }
             }
         }
