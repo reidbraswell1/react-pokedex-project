@@ -47,7 +47,7 @@ const Results = (props) => {
             <div className="row">
                 <div className="col-7 mx-auto">
                     {location.state != null &&
-                        <Table pokemons={props.pokedexList.pokemon} pokemonImages={location.state.pokemonImages} weaknesses={location.state.weaknesses} type={location.state.type}></Table>
+                        <Table pokemons={props.pokedexList.pokemon} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>
                     }
                     <div className="row">
                         <div className="col-7 mx-auto">
