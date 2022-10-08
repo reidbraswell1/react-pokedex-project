@@ -87,47 +87,6 @@ const getPokemonImages = (list=[{"id":"0","img":""}]) => {
     return pokemonImagesId;
 }
 
-
-/*
-const processSubmission = (event) => {
-
-    console.log(`---Begin Function processSubmission()---`);
-
-    event.preventDefault();
-    console.log(`Event`,event.target[0].value);
-    console.log(document.getElementById("pokemon-name").selected);
-    const pokemonName = document.getElementById("pokemon-name");
-    let pokemonSelectedNamesArray = [];
-    for (let i=0,count=0; i<pokemonName.options.length; i++) { 
-        if (pokemonName.options[i].selected) {
-            pokemonSelectedNamesArray[count] = pokemonName.options[i].value;
-            count++; 
-        } 
-    }
-    const pokemonType = document.getElementById("pokemon-type");
-    let pokemonSelectedTypesArray = [];
-    for (let i=0,count=0; i<pokemonType.options.length; i++) { 
-        if (pokemonType.options[i].selected) {
-            pokemonSelectedTypesArray[count] = pokemonType.options[i].value;
-            count++; 
-        } 
-    }
-    const pokemonWeakness = document.getElementById("pokemon-weakness");
-    let pokemonSelectedWeaknessesArray = [];
-    for (let i=0,count=0; i<pokemonWeakness.options.length; i++) { 
-        if (pokemonWeakness.options[i].selected) {
-            pokemonSelectedWeaknessesArray[count] = pokemonWeakness.options[i].value;
-            count++; 
-        } 
-    }
-    console.log(`PokemonSelectedArray=`,pokemonSelectedNamesArray);
-    console.log(`PokemonSelectedTypes=`,pokemonSelectedTypesArray);
-    console.log(`PokemonSelectedWeaknesses=`,pokemonSelectedWeaknessesArray);
-
-    console.log(`---End Function processSubmission()---`);
-}
-*/
-
 const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemonList=[{"name":"","type":"","weaknesses":""}]) => {
     
     console.log(`---Begin filterPokemon()---`);
@@ -136,8 +95,6 @@ const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemo
         filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
         filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
 
-    //console.log(`FilteredPokemonList=`,filteredPokemonList);
-    console.log(`---End Function filterPokemon()---`);
     filteredPokemonList.sort((a,b) => {
         return b.name < a.name;
     });
@@ -150,7 +107,10 @@ const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemo
         element.weaknesses.sort((a,b) => {
             return b < a;
         });
-    });    
+    });
+    
+    console.log(`FilteredPokemonList=`,filteredPokemonList);
+    console.log(`---End Function filterPokemon()---`);  
     return filteredPokemonList;
 }
 
@@ -213,7 +173,6 @@ const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""
         for(let j=0; j<pokemonList[i].weaknesses.length; j++) {
             for(let k=0; k<weaknessProps.length; k++) {
                 if(pokemonList[i].weaknesses[j].toString() === weaknessProps[k].toString()) {
-                    console.log(`Match ${k} PokemonList ${i}.weaknesses ${j} =`,pokemonList[i].weaknesses[j],` WeaknessProps ${k} =`,weaknessProps[k]);
                     filteredPokemonList.push(pokemonList[i]);
                 }
             }
