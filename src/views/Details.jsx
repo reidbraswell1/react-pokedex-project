@@ -18,16 +18,18 @@ const DetailsView = (props) => {
     const navigate = useNavigate();
 
     const [ seconds, setSeconds ] = useState(6);
-
+    console.log(props.pokedexList.pokemon[params.id]);
     
 
     console.log(`Location.state`, location.state);
 
-    let pokemon = null;
+    let pokemon = props.pokedexList.pokemon[params.id];
+    let pokemons = props.pokedexList.pokemon;
     let pokemonImages = null;
+    
     if (location.state != null) {
         if ('pokemon' in location.state) {
-            pokemon = location.state.pokemon;
+    //        pokemon = location.state.pokemon;
         }
         if ('pokemonImages' in location.state) {
             pokemonImages = location.state.pokemonImages;
@@ -73,7 +75,6 @@ const DetailsView = (props) => {
 
     return (
         <div className="container-fluid">
-            {/*
             {location.state != null &&
                 <div>
                     <div className="row">
@@ -129,7 +130,7 @@ const DetailsView = (props) => {
                                                                 return (<tr key={`heading-next-evolution-${index}`}>
                                                                     <td>{value.num}</td>
                                                                     <td>{value.name}</td>
-                                                                    <td><img className="mx-auto d-block" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                    <td><img className="mx-auto d-block" src={pokemons[id].img} width="40rem" alt="Pokemon"></img></td>
                                                                 </tr>)
                                                             })}
                                                         {'prev_evolution' in pokemon &&
@@ -139,7 +140,7 @@ const DetailsView = (props) => {
                                                                 return (<tr key={`heading-prev-evolution-${index}`}>
                                                                     <td>{value.num}</td>
                                                                     <td>{value.name}</td>
-                                                                    <td><img className="mx-auto d-block" src={pokemonImages[id].img} width="40rem" alt="Pokemon"></img></td>
+                                                                    <td><img className="mx-auto d-block" src={pokemons[id].img} width="40rem" alt="Pokemon"></img></td>
                                                                 </tr>)
                                                             })}
                                                     </tbody>
@@ -161,7 +162,6 @@ const DetailsView = (props) => {
                     </h1>
                 </div>
             }
-        */}
         </div>
     )
 }
