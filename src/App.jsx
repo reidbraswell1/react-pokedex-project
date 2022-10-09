@@ -17,7 +17,8 @@ const App = (props) => {
   console.log(`---Begin Function App()---`);
   console.log(`Props=`,props);
 
-  const [ pokedexList, setPokedexList ] = useState({"pokemon":[{"id":"0","num":"000","name":"Name","type":["Type"],"weaknesses":["Weaknesses"],"img":"https://static.vecteezy.com/system/resources/previews/000/440/566/original/vector-picture-icon.jpg"}]});
+  //const [ pokedexList, setPokedexList ] = useState({"pokemon":[{"id":"0","num":"000","name":"Name","type":["Type"],"weaknesses":["Weaknesses"],"img":"https://static.vecteezy.com/system/resources/previews/000/440/566/original/vector-picture-icon.jpg"}]});
+  const [ pokedexList, setPokedexList ] = useState({"pokemon":[]});
   const [ types, setTypes ] = useState([]);
   const [ weaknesses, setWeaknesses ] = useState([]);
   const [ names, setNames ] = useState([{"id":0,"name":""}]);
