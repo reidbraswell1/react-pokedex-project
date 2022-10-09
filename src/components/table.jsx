@@ -78,10 +78,10 @@ const Table = (props) => {
                 <td>
                     <div className="w-12">
                         <button value="numericSortDown" onClick={processSort}>
-                            <i id="numeric-sort-down" class="bi bi-sort-numeric-down" ></i>
+                            <i id="numeric-sort-down" className="bi bi-sort-numeric-down" ></i>
                         </button>
                         <button value="numericSortUp" onClick={processSort}>
-                            <i id="numeric-sort-up" class="bi bi-sort-numeric-up-alt"></i>
+                            <i id="numeric-sort-up" className="bi bi-sort-numeric-up-alt"></i>
                         </button>
                     </div>
                 </td>
