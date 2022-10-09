@@ -1,44 +1,56 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Table = (props) => {
 
     console.log(`---Begin Function Table()---`);
     console.log(`Props=`, props);
+    console.log(`Props.pokemons =`, props.pokemons)
 
-    const [pokemon, setPokemon] = useState(props.pokemons);
+    const [pokemons, setPokemon] = useState(props.pokemons);
+
+    const params = useParams();
+
+    // Convert strings to arrays
+    const ids = params.ids.split(",");
+    const types = params.types.split(",");
+    const weaknesses = params.weaknesses.split(",");
+
+    console.log(`Params.ids =`, params.ids)
+    console.log(`Params.types =`, params.types)
+    console.log(`Params.weaknesses =`, params.weaknesses)
 
     useEffect(() => {
 
-    },[])
+    }, [])
 
     const processSort = (event) => {
         console.log(`Begin Function processSort()---`);
-        console.log(`Event.target.id =`,event.target.id);
-        switch(event.target.id) {
+        console.log(`Event.target.id =`, event.target.id);
+        switch (event.target.id) {
             case "numeric-sort-down":
-                let nbrDown = props.pokemons.slice(0);
+                let nbrDown = pokemons.slice(0);
                 nbrDown.sort((a, b) => {
                     return b.id < a.id;
                 });
                 setPokemon(nbrDown);
                 break;
             case "numeric-sort-up":
-                let nbrUp = props.pokemons.slice(0);
+                let nbrUp = pokemons.slice(0);
                 nbrUp.sort((a, b) => {
                     return b.num > a.num;
                 });
                 setPokemon(nbrUp);
                 break;
             case "alpha-sort-down":
-                let alphaDown = props.pokemons.slice(0);
+                let alphaDown = pokemons.slice(0);
                 alphaDown.sort((a, b) => {
                     return b.name < a.name;
                 });
                 setPokemon(alphaDown);
                 break;
             case "alpha-sort-up":
-                let alphaUp = props.pokemons.slice(0);
+                let alphaUp = pokemons.slice(0);
                 alphaUp.sort((a, b) => {
                     return b.name > a.name;
                 });
@@ -53,7 +65,7 @@ const Table = (props) => {
     console.log(`---End Function Table()---`);
 
     return (<table className="table table-striped table-bordered background-color-white w-auto mx-auto">
-        <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
+        <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {pokemons.length} Rows Returned</caption>
         <thead>
             <tr key="results-heading">
                 <th scope="col">Num</th>
@@ -87,27 +99,29 @@ const Table = (props) => {
             </tr>
         </thead>
         <tbody>
-            {props.pokemons.map((value, index, array) => {
-                return (<tr key={`results-details-tr-${index}`} id={`results-details-tr-${index}`}>
-                    <td key={`td-${index}-1`}>{value.num}</td>
-                    <td key={`td-${index}-2`}>{value.name}</td>
-                    <td key={`td-${index}-3`}>{value.type.map((type, index2, array2) => {
-                        return props.types.indexOf(type) < 0 ? 
-                                (index2 < value.type.length-1 ? `${type}, ` : `${type}`) :
-                                (index2 < value.type.length-1 ? <u>{type}, </u> : <u>{type}</u>)
-                                                }
-                                            )}
+            {pokemons.map((pokemon, idx, array) => {
+                console.log("Pokemon in Table=",pokemon)
+                return (<tr key={`tr-${idx}-1`} id={`tr-${idx}-1`}>
+                    <td key={`td-${idx}-1`}>{pokemon.num}</td>
+                    <td key={`td-${idx}-2`}>{pokemon.name}</td>
+                    <td key={`td-${idx}-3`}>{pokemon.type.map((type, idx2, array2) => {
+                        return params.types.indexOf(type) < 0 ?
+                            (idx2 < pokemon.type.length - 1 ? `${type}, ` : `${type}`) :
+                            (idx2 < pokemon.type.length - 1 ? <u>{type}, </u> : <u>{type}</u>)
+                    }
+                    )}
                     </td>
-                    <td key={`td-${index}-4`}>{value.weaknesses.map((weakness,index3,array) => {
-                        return props.weaknesses.indexOf(weakness) < 0 ? 
-                                      (index3 < value.weaknesses.length-1 ? `${weakness}, ` : `${weakness}`) :
-                                      (index3 < value.weaknesses.length-1 ? <u>{weakness}, </u> : <u>{weakness}</u>)
-                                      
-                        }
-                    )}</td>
-                    <td key={`td-${index}-5`}>
-                        <Link className="" to={`/Details/${value.id}`} state={{ "pokemon": value, "pokemonImages": props.pokemonImages }}>
-                            <img className="border rounded imgLink mx-auto d-block" style={{ marginLeft: ".5rem", padding: "2px" }} src={value.img} alt="Pokemon" width="40rem" loading="lazy"></img>
+                    <td key={`td-${idx}-4`}>{pokemon.weaknesses.map((weakness, idx3, array) => {
+                        return params.weaknesses.indexOf(weakness) < 0 ?
+                            (idx3 < pokemon.weaknesses.length - 1 ? `${weakness}, ` : `${weakness}`) :
+                            (idx3 < pokemon.weaknesses.length - 1 ? <u>{weakness}, </u> : <u>{weakness}</u>)
+
+                    }
+                    )}
+                    </td>
+                    <td key={`td-${idx}-5`}>
+                        <Link className="" to={`/Details/${pokemon.id}`} state={{ "pokemon": pokemon.id, "pokemonImages": props.pokemonImages }}>
+                            <img className="border rounded imgLink mx-auto d-block" style={{ marginLeft: ".5rem", padding: "2px" }} src={pokemon.img} alt="Pokemon" width="40rem" loading="lazy"></img>
                         </Link>
                     </td>
                 </tr>

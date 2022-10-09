@@ -11,17 +11,28 @@ const Results = (props) => {
     console.log(`---Begin Function Results()---`);
 
     const params = useParams();
-    console.log(`Props.pokedexList =`,props.pokedexList);
-    console.log(`Params.ids =`,params.ids);
-    console.log(`Params.types =`,params.types);
-    console.log(`Params.weaknesses =`,params.weaknesses);
+    console.log(`Props2.pokedexList =`, props.pokedexList);
+    console.log(`Params.ids =`, params.ids);
+    console.log(`Params.types =`, params.types);
+    console.log(`Params.weaknesses =`, params.weaknesses);
 
-    let ids = params.ids.split(",");
-    let types = params.types.split(",");
-    let weaknesses = params.weaknesses.split(",");
-    console.log(`Ids =`,ids);
-    console.log(`Types =`,types);
-    console.log(`Weaknesses =`,weaknesses);
+    const ids = params.ids.split(",");
+    const types = params.types.split(",");
+    const weaknesses = params.weaknesses.split(",");
+    let pokemonResults = [];
+    ids.map((id, idx, array) => {
+        console.log("Loop id =",id)
+        console.log("Before Push = ",props.pokedexList.pokemon);
+        props.pokedexList.pokemon.forEach((pokemon, idx, array) => {
+            if(pokemon.id.toString() === id.toString()) {
+                pokemonResults.push(pokemon);
+            }
+        })
+    })
+    console.log(`Ids =`, ids);
+    console.log(`Types =`, types);
+    console.log(`Weaknesses =`, weaknesses);
+    console.log(`Pokemons =`, pokemonResults);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -46,11 +57,10 @@ const Results = (props) => {
             </div>
             <div className="row">
                 <div className="col-7 mx-auto">
-                    {location.state != null &&
-                        <Table pokemons={props.pokedexList.pokemon} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>
-                    }
+                    <Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>
                     <div className="row">
                         <div className="col-7 mx-auto">
+                            {/*
                             {location.state != null && location.state.errorText.length > 0 &&
                                 <div>
                                     <p className="error"><span className="color-red">{location.state.errorText}</span></p>
@@ -67,6 +77,7 @@ const Results = (props) => {
                                     <p className="error"><span className="color-white">{location.state.filterWeaknesses}</span></p>
                                 </div>
                             }
+                        */}
                         </div>
                     </div>
                     <Footer></Footer>
