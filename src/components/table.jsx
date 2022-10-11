@@ -4,24 +4,20 @@ import { Link, useParams } from "react-router-dom";
 const Table = (props) => {
 
     console.log(`---Begin Function Table()---`);
-    console.log(`Props=`, props);
-    console.log(`Props.pokemons =`, props.pokemons)
 
     const [pokemons, setPokemon] = useState(props.pokemons);
 
-    const params = useParams();
-
-    // Convert strings to arrays
-    const ids = params.ids.split(",");
-    const types = params.types.split(",");
-    const weaknesses = params.weaknesses.split(",");
-
-    console.log(`Params.ids =`, params.ids)
-    console.log(`Params.types =`, params.types)
-    console.log(`Params.weaknesses =`, params.weaknesses)
+    console.log(`Props=`, props);
+    console.log(`Props.pokemons =`, props.pokemons)
+    console.log(`Pokemons =`,pokemons);
+    console.log(`Props.ids =`,props.ids);
+    console.log(`Props.types =`,props.types);
+    console.log(`Props.weaknesses =`,props.weaknesses);
+    console.log(`Pokemons =`,pokemons);
 
     useEffect(() => {
-
+        console.log(`---Begin Function useEffect()---`);
+        console.log(`---End Function useEffect()---`);
     }, [])
 
     const processSort = (event) => {
@@ -65,7 +61,7 @@ const Table = (props) => {
     console.log(`---End Function Table()---`);
 
     return (<table className="table table-striped table-bordered background-color-white w-auto mx-auto">
-        <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {pokemons.length} Rows Returned</caption>
+        <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
         <thead>
             <tr key="results-heading">
                 <th scope="col">Num</th>
@@ -99,20 +95,20 @@ const Table = (props) => {
             </tr>
         </thead>
         <tbody>
-            {pokemons.map((pokemon, idx, array) => {
+            {props.pokemons.map((pokemon, idx, array) => {
                 console.log("Pokemon in Table=",pokemon)
                 return (<tr key={`tr-${idx}-1`} id={`tr-${idx}-1`}>
                     <td key={`td-${idx}-1`}>{pokemon.num}</td>
                     <td key={`td-${idx}-2`}>{pokemon.name}</td>
                     <td key={`td-${idx}-3`}>{pokemon.type.map((type, idx2, array2) => {
-                        return params.types.indexOf(type) < 0 ?
+                        return props.types.indexOf(type) < 0 ?
                             (idx2 < pokemon.type.length - 1 ? `${type}, ` : `${type}`) :
                             (idx2 < pokemon.type.length - 1 ? <u>{type}, </u> : <u>{type}</u>)
                     }
                     )}
                     </td>
                     <td key={`td-${idx}-4`}>{pokemon.weaknesses.map((weakness, idx3, array) => {
-                        return params.weaknesses.indexOf(weakness) < 0 ?
+                        return props.weaknesses.indexOf(weakness) < 0 ?
                             (idx3 < pokemon.weaknesses.length - 1 ? `${weakness}, ` : `${weakness}`) :
                             (idx3 < pokemon.weaknesses.length - 1 ? <u>{weakness}, </u> : <u>{weakness}</u>)
 
@@ -120,7 +116,8 @@ const Table = (props) => {
                     )}
                     </td>
                     <td key={`td-${idx}-5`}>
-                        <Link className="" to={`/Details/${pokemon.id}`} state={{ "pokemon": pokemon.id, "pokemonImages": props.pokemonImages }}>
+                       {/* <Link className="" to={`/Details/${pokemon.id}`} state={{ "pokemon": pokemon.id, "pokemonImages": props.pokemonImages }}></Link>*/}
+                        <Link className="" to={`/Details/${pokemon.id}`}>
                             <img className="border rounded imgLink mx-auto d-block" style={{ marginLeft: ".5rem", padding: "2px" }} src={pokemon.img} alt="Pokemon" width="40rem" loading="lazy"></img>
                         </Link>
                     </td>
