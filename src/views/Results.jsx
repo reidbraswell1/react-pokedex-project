@@ -5,65 +5,51 @@ import Footer from "../components/footer.jsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { type } from "@testing-library/user-event/dist/type/index.js";
+import { getPokedexList } from "../utils/pokemonUtils.js";
 
 const Results = (props) => {
 
     console.log(`---Begin Function Results()---`);
 
+    const [pokedexList2, setPokedexList2] = useState(props.pokedexList.pokemon);
+
     const params = useParams();
-    console.log(`Props2.pokedexList =`, props.pokedexList);
+    console.log(`Props.pokedexList =`, props.pokedexList.pokemon);
     console.log(`Params.ids =`, params.ids);
     console.log(`Params.types =`, params.types);
     console.log(`Params.weaknesses =`, params.weaknesses);
-    const getPokedexList = () => {
-        console.log(`---Begin Function getPokedexList()---`);
-    
-        const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
-        const GOOD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
-        let URL = "";
-    
-        // Set URL to the good url or bad based on the errTest prop
-        /*
-        if(errorTest) {
-            URL = BAD_URL;
-        }
-        else {
-            URL = GOOD_URL;
-        }
-        */
-        fetch(GOOD_URL)
-            .then((response) => {
-                if(response.ok) { 
-                    return response.json()
+
+    let pokedexList = props.pokedexList.pokemon;
+    if (pokedexList.length === 0) {
+        let results = getPokedexList()
+        .then((results) => {
+            if ('data' in results) {
+                if (results.data === null) {
+                    console.log(`Results.data is null =`, results.data)
                 }
                 else {
-                    throw new Error("Unknown Network Error Has Occurred");
+                    console.log(`Results.data not null =`, results.data);
+                    if ('pokemon' in results.data) {
+                        console.log(`Results.data.pokemon =`, results.data.pokemon);
+                        pokedexList=(results.data.pokemon);
+                    }
+                    else {
+                        console.log("Pokemon not in results");
+                    }
                 }
-            })
-            .then((data) => {
-                console.log(`Data=`,data);
-                pokedexList = data.pokemon;
-            })
-            .catch((err) => { 
-                console.log(`${err} fetching from URL: ${URL}`);
-                //setList([]);
-                //setErrorText(`${err} fetching from URL: ${URL}`);
-            });
-        console.log(`---End Function getPokedexList()---`);
-      }
-    let pokedexList = props.pokedexList.pokemon;
-    if(pokedexList.length == 0) {
-        getPokedexList();
+            }
+            else {
+                console.log("Data not in results");
+            }
+        });
     }
     const ids = params.ids.split(",");
     const types = params.types.split(",");
     const weaknesses = params.weaknesses.split(",");
     let pokemonResults = [];
     ids.map((id, idx, array) => {
-        console.log("Loop id =",id)
-        console.log("Before Push = ",pokedexList.pokemon);
         pokedexList.forEach((pokemon, idx, array) => {
-            if(pokemon.id.toString() === id.toString()) {
+            if (pokemon.id.toString() === id.toString()) {
                 pokemonResults.push(pokemon);
             }
         })
@@ -79,12 +65,38 @@ const Results = (props) => {
 
     useEffect(() => {
         console.log(`---Begin Function useEffect()---`);
+        if (pokedexList2.length === 0) {
+            let results = getPokedexList()
+                .then((results) => {
+                    if ('data' in results) {
+                        if (results.data === null) {
+                            console.log(`Results.data is null =`, results.data)
+                        }
+                        else {
+                            console.log(`Results.data not null =`, results.data);
+                            if ('pokemon' in results.data) {
+                                console.log(`Results.data.pokemon =`, results.data.pokemon);
+                                setPokedexList2(results.data.pokemon);
+                            }
+                            else {
+                                console.log("Pokemon not in results");
+                            }
+                        }
+                    }
+                    else {
+                        console.log("Data not in results");
+                    }
+                });
+        }
         console.log(`---End Function useEffect()---`)
     }, []);
+    const changeState = () => {
+        setPokedexList2(new Array({ "name": "Josh" }));
 
+    }
     console.log(`---End Function Results()---`);
 
-    
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -96,7 +108,7 @@ const Results = (props) => {
                 <div className="col-7 mx-auto">
 
                     {/*<Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>*/}
-                    <Table pokemons={pokemonResults} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>
+                    <Table pokemons={pokemonResults} ids={ids} types={types} weaknesses={weaknesses}></Table>
                     <div className="row">
                         <div className="col-7 mx-auto">
                             {/*
@@ -117,6 +129,11 @@ const Results = (props) => {
                                 </div>
                             }
                         */}
+                            <ul>
+                                {pokedexList2.map((element, idx, array) => {
+                                    return <li key={idx}>{element.name}</li>
+                                })}
+                            </ul>
                         </div>
                     </div>
                     <Footer></Footer>
