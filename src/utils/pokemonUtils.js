@@ -1,4 +1,34 @@
-const getPokemonWeaknesses = (list=[{"weaknesses":""}]) => {
+const getPokedexList = async (urlTest = false,) => {
+    console.log(`---Begin Function getPokedexList()---`);
+
+    const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
+    const GOOD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
+    let URL = "";
+
+    // Set URL to the good url or bad based on the errTest prop
+    if (urlTest) {
+        URL = BAD_URL;
+    }
+    else {
+        URL = GOOD_URL;
+    }
+    try {
+        const response = await fetch(GOOD_URL)
+        if (response.ok) {
+            const result = await response.json();
+            return ({ "data": result });
+        }
+        else {
+            return ({"err":response.status})
+        }
+    }
+    catch (err) {
+        console.log(`Fetch Error =`, err);
+    }
+    console.log(`---End Function getPokedexList()---`);
+}
+
+const getPokemonWeaknesses = (list = [{ "weaknesses": "" }]) => {
 
     console.log(`---Begin Function getPokemonWeaknesses()---`);
 
@@ -6,7 +36,7 @@ const getPokemonWeaknesses = (list=[{"weaknesses":""}]) => {
 
     list.forEach((element) => {
         element.weaknesses.forEach(weakness => {
-            if(pokemonWeaknesses.includes(weakness)) {
+            if (pokemonWeaknesses.includes(weakness)) {
 
             }
             else {
@@ -16,18 +46,18 @@ const getPokemonWeaknesses = (list=[{"weaknesses":""}]) => {
     })
     pokemonWeaknesses.sort();
     console.log(`---End Function getPokemonWeaknesses()---`);
-    
+
     return pokemonWeaknesses;
 }
 
-const getPokemonTypes = (list=[{"type":""}]) => {
+const getPokemonTypes = (list = [{ "type": "" }]) => {
     console.log(`---Begin Function getPokemonTypes()---`);
 
     let pokemonTypes = [];
 
     list.forEach((element) => {
         element.type.forEach(type => {
-            if(pokemonTypes.includes(type)) {
+            if (pokemonTypes.includes(type)) {
 
             }
             else {
@@ -41,91 +71,91 @@ const getPokemonTypes = (list=[{"type":""}]) => {
     return pokemonTypes;
 }
 
-const getPokemonNames = (list=[{"id":"0","name":""}]) => {
+const getPokemonNames = (list = [{ "id": "0", "name": "" }]) => {
     console.log(`---Begin Function getPokemonNames()---`);
 
     let pokemonNamesId = [];
 
     list.forEach((element) => {
-            if('name' in pokemonNamesId) {
-                if(pokemonNamesId.name.includes(element.name)) {
+        if ('name' in pokemonNamesId) {
+            if (pokemonNamesId.name.includes(element.name)) {
 
-                }
             }
-            else {
-                pokemonNamesId.push({"id":element.id, "name":element.name});
-            }
+        }
+        else {
+            pokemonNamesId.push({ "id": element.id, "name": element.name });
+        }
     });
     console.log(`---End Function getPokemonNames()---`);
 
-    pokemonNamesId.sort((a,b) => {
+    pokemonNamesId.sort((a, b) => {
         return b.name < a.name;
     });
     return pokemonNamesId;
 }
 
-const getPokemonImages = (list=[{"id":"0","img":""}]) => {
+const getPokemonImages = (list = [{ "id": "0", "img": "" }]) => {
     console.log(`---Begin Function getPokemonImages()---`);
 
     let pokemonImagesId = [];
 
     list.forEach((element) => {
-            if('name' in pokemonImagesId) {
-                if(pokemonImagesId.name.includes(element.name)) {
+        if ('name' in pokemonImagesId) {
+            if (pokemonImagesId.name.includes(element.name)) {
 
-                }
             }
-            else {
-                pokemonImagesId.push({"id":element.id, "img":element.img});
-            }
+        }
+        else {
+            pokemonImagesId.push({ "id": element.id, "img": element.img });
+        }
     });
     console.log(`---End Function getPokemonImages()---`);
 
-    pokemonImagesId.sort((a,b) => {
+    pokemonImagesId.sort((a, b) => {
         return b.id < a.id;
     });
     return pokemonImagesId;
 }
 
-const filterPokemon = (filterProps={"name":[],"type":[],"weaknesses":[]}, pokemonList=[{"name":"","type":"","weaknesses":""}]) => {
-    
-    console.log(`---Begin filterPokemon()---`);
-    
-    let filteredPokemonList = filterPokemonName(filterProps.name, pokemonList);
-        filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
-        filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
+const filterPokemon = (filterProps = { "name": [], "type": [], "weaknesses": [] }, pokemonList = [{ "name": "", "type": "", "weaknesses": "" }]) => {
 
-    filteredPokemonList.sort((a,b) => {
+    console.log(`---Begin filterPokemon()---`);
+
+    let filteredPokemonList = filterPokemonName(filterProps.name, pokemonList);
+    filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
+    filteredPokemonList = filterPokemonWeaknesses(filterProps.weaknesses, filteredPokemonList);
+
+    filteredPokemonList.sort((a, b) => {
         return b.id < a.id;
     });
     filteredPokemonList.forEach((element) => {
-        element.type.sort((a,b) => {
+        element.type.sort((a, b) => {
             return b < a;
         });
     });
     filteredPokemonList.forEach((element) => {
-        element.weaknesses.sort((a,b) => {
+        element.weaknesses.sort((a, b) => {
             return b < a;
         });
     });
-    
-    console.log(`FilteredPokemonList=`,filteredPokemonList);
-    console.log(`---End Function filterPokemon()---`);  
+
+    console.log(`FilteredPokemonList=`, filteredPokemonList);
+    console.log(`---End Function filterPokemon()---`);
     return filteredPokemonList;
 }
 
-const filterPokemonName = (nameProps=[], pokemonList=[{"id":""}]) => {
+const filterPokemonName = (nameProps = [], pokemonList = [{ "id": "" }]) => {
 
     console.log(`---Begin Function filterPokemonName()---`);
 
     let filteredPokemonList = [];
-    if(nameProps.length === 1 && nameProps[0]==="All") {
+    if (nameProps.length === 1 && nameProps[0] === "All") {
         return pokemonList;
     }
 
-    for(let i=0; i<pokemonList.length; i++) {
-        for(let j=0; j<nameProps.length; j++) {
-            if(pokemonList[i].id.toString() === nameProps[j].toString()) {
+    for (let i = 0; i < pokemonList.length; i++) {
+        for (let j = 0; j < nameProps.length; j++) {
+            if (pokemonList[i].id.toString() === nameProps[j].toString()) {
                 filteredPokemonList.push(pokemonList[i]);
             }
         }
@@ -134,70 +164,70 @@ const filterPokemonName = (nameProps=[], pokemonList=[{"id":""}]) => {
     return filteredPokemonList;
 }
 
-const filterPokemonTypes = (typeProps=[], pokemonList=[{"type":[]}]) => {
+const filterPokemonTypes = (typeProps = [], pokemonList = [{ "type": [] }]) => {
 
     console.log(`---Begin Function filterPokemonType()---`);
 
     let filteredPokemonList = [];
-    if(typeProps.length === 1 && typeProps[0]==="All") {
+    if (typeProps.length === 1 && typeProps[0] === "All") {
         return pokemonList;
     }
 
-    for(let i=0; i<pokemonList.length; i++) {
-        for(let j=0; j<pokemonList[i].type.length; j++) {
-            for(let k=0; k<typeProps.length; k++) {
-                if(pokemonList[i].type[j].toString() === typeProps[k].toString()) {
+    for (let i = 0; i < pokemonList.length; i++) {
+        for (let j = 0; j < pokemonList[i].type.length; j++) {
+            for (let k = 0; k < typeProps.length; k++) {
+                if (pokemonList[i].type[j].toString() === typeProps[k].toString()) {
                     // Don't add if already in list
                     let found = false;
                     filteredPokemonList.forEach((obj, idx, array) => {
-                        if(obj.id === pokemonList[i].id) {
+                        if (obj.id === pokemonList[i].id) {
                             found = true;
                         }
                     })
-                    if(!found) {
+                    if (!found) {
                         filteredPokemonList.push(pokemonList[i]);
                     }
                 }
             }
         }
     }
-    console.log(`FilteredTypes=`,filteredPokemonList);
+    console.log(`FilteredTypes=`, filteredPokemonList);
     console.log(`---End Function filterPokemonType()---`);
     return filteredPokemonList;
 
 }
 
-const filterPokemonWeaknesses = (weaknessProps=[], pokemonList=[{"weaknesses":""}]) => {
+const filterPokemonWeaknesses = (weaknessProps = [], pokemonList = [{ "weaknesses": "" }]) => {
 
     console.log(`---Begin Function filterPokemonWeaknesses()---`);
 
     let filteredPokemonList = [];
-    if(weaknessProps.length === 1 && weaknessProps[0]==="All") {
+    if (weaknessProps.length === 1 && weaknessProps[0] === "All") {
         return pokemonList;
     }
 
-    for(let i=0; i<pokemonList.length; i++) {
-        for(let j=0; j<pokemonList[i].weaknesses.length; j++) {
-            for(let k=0; k<weaknessProps.length; k++) {
-                if(pokemonList[i].weaknesses[j].toString() === weaknessProps[k].toString()) {
+    for (let i = 0; i < pokemonList.length; i++) {
+        for (let j = 0; j < pokemonList[i].weaknesses.length; j++) {
+            for (let k = 0; k < weaknessProps.length; k++) {
+                if (pokemonList[i].weaknesses[j].toString() === weaknessProps[k].toString()) {
                     // Don't add if already in list
                     let found = false;
                     filteredPokemonList.forEach((obj, idx, array) => {
-                        if(obj.id === pokemonList[i].id) {
+                        if (obj.id === pokemonList[i].id) {
                             found = true;
                         }
                     })
-                    if(!found) {
+                    if (!found) {
                         filteredPokemonList.push(pokemonList[i]);
                     }
                 }
             }
         }
     }
-    console.log(`FilteredWeaknesses=`,filteredPokemonList);
+    console.log(`FilteredWeaknesses=`, filteredPokemonList);
     console.log(`---End Function filterPokemonWeaknesses()---`);
     return filteredPokemonList;
 
 }
 
-export { getPokemonImages, getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
+export { getPokedexList, getPokemonImages, getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
