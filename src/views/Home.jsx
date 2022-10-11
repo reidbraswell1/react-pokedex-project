@@ -87,7 +87,8 @@ const HomePage = (props) => {
             filteredPokemonIds.push(obj.id)
         })
 
-        navigate(`/results/${filteredPokemonIds}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`, { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses, weaknesses: pokemonSelectedWeaknessesArray, type: pokemonSelectedTypesArray } });
+        //navigate(`/results/${filteredPokemonIds}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`, { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses, weaknesses: pokemonSelectedWeaknessesArray, type: pokemonSelectedTypesArray } });
+        navigate(`/results/${filteredPokemonIds}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
     }
 
     const resetLinks = (event) => {
