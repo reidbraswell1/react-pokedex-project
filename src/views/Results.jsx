@@ -119,16 +119,19 @@ const Results = (props) => {
                                     <p className="error"><span className="color-red">{location.state.filterTypes}</span></p>
                                     <p className="error"><span className="color-red">{location.state.filterWeaknesses}</span></p>
                                 </div>
-                            }
-                            {location.state != null && location.state.filterText.length > 0 &&
+                            */}
                                 <div>
-                                    <p className="error"><span className="color-white">{location.state.filterText}</span></p>
-                                    <p className="error"><span className="color-white">{location.state.filterNames}</span></p>
-                                    <p className="error"><span className="color-white">{location.state.filterTypes}</span></p>
-                                    <p className="error"><span className="color-white">{location.state.filterWeaknesses}</span></p>
+                                    <p className="error"><span className="color-white">Search Criteria:</span></p>
+                                    <p className="error"><span className="color-white">Names:</span>
+                                    <ul className="color-white">
+                                        {pokemonResults.map((pokemon, idx, array) => {
+                                            return idx < pokemonResults.length-1 ? <li key={`li-${idx}`}>{`${pokemon.name}(${pokemon.id}), `}</li> : <li key={`li-${ids}`}>{` ${pokemon.name}(${pokemon.id})`}</li>
+                                        })}
+                                    </ul>
+                                    </p>
+                                    <p className="error"><span className="color-white">Types: {types.toString()}</span></p>
+                                    <p className="error"><span className="color-white">Weaknesses: {weaknesses.toString()}</span></p>
                                 </div>
-                            }
-                        */}
                             <ul>
                                 {pokedexList2.map((element, idx, array) => {
                                     return <li key={idx}>{element.name}</li>
