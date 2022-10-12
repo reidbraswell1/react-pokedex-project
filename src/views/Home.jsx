@@ -88,10 +88,10 @@ const HomePage = (props) => {
         })
 
         if(filteredPokemonIds.length === 0) {
-            navigate(`/results/none/${pokemonSelectedNamesArray}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
+            navigate(`/Results/none/${pokemonSelectedNamesArray}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
         }
         else {
-            navigate(`/results/${filteredPokemonIds}/${filterNames}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
+            navigate(`/Results/${filteredPokemonIds}/${filterNames}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
         }
         //navigate(`/results/${filteredPokemonIds}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`, { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses, weaknesses: pokemonSelectedWeaknessesArray, type: pokemonSelectedTypesArray } });
     }
