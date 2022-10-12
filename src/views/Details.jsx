@@ -21,8 +21,6 @@ const DetailsView = (props) => {
     console.log(props.pokedexList.pokemon[params.id]);
     
 
-    console.log(`Location.state`, location.state);
-
     let pokemon = props.pokedexList.pokemon[params.id];
     let pokemons = props.pokedexList.pokemon;
     let pokemonImages = null;
@@ -42,6 +40,7 @@ const DetailsView = (props) => {
     useEffect(() => {
         console.log(`---Begin Function useEffect()---`);
 
+        /*
         if (location.state === null) {
            return () => {
             console.log(`---Begin useEffect Callback Function Null State---`);
@@ -54,6 +53,7 @@ const DetailsView = (props) => {
             console.log(`---Begin useEffect Callback Function Non Null State---`);
             console.log(`---End useEffect Callback Function Non Null State---`);
         }
+        */
         console.log(`---End Function useEffect()---`);
     }, [])
 
@@ -75,7 +75,6 @@ const DetailsView = (props) => {
 
     return (
         <div className="container-fluid">
-            {location.state != null &&
                 <div>
                     <div className="row">
                         <div className="col-4 mx-auto">
@@ -154,14 +153,13 @@ const DetailsView = (props) => {
                         </div>
                     </div>
                 </div>
-            }
-            {location.state === null &&
+            {/*location.state === null &&
                 <div>
                     <h1>location.state is null redirecting to Home page in 
                         <span id="counter" style={{"color":"red"}}> {mySeconds}</span> seconds
                     </h1>
                 </div>
-            }
+            */}
         </div>
     )
 }
