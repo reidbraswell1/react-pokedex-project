@@ -5,7 +5,8 @@ import Footer from "../components/footer.jsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { type } from "@testing-library/user-event/dist/type/index.js";
-import { getPokedexList } from "../utils/pokemonUtils.js";
+import { getPokedexList, getPokemonNames } from "../utils/pokemonUtils.js";
+import ErrorBoundary from "react-error-boundary";
 
 const Results = (props) => {
 
@@ -16,34 +17,36 @@ const Results = (props) => {
     const params = useParams();
     console.log(`Props.pokedexList =`, props.pokedexList.pokemon);
     console.log(`Params.ids =`, params.ids);
+    console.log(`Prarams.names =`, params.names);
     console.log(`Params.types =`, params.types);
     console.log(`Params.weaknesses =`, params.weaknesses);
 
     let pokedexList = props.pokedexList.pokemon;
     if (pokedexList.length === 0) {
         let results = getPokedexList()
-        .then((results) => {
-            if ('data' in results) {
-                if (results.data === null) {
-                    console.log(`Results.data is null =`, results.data)
-                }
-                else {
-                    console.log(`Results.data not null =`, results.data);
-                    if ('pokemon' in results.data) {
-                        console.log(`Results.data.pokemon =`, results.data.pokemon);
-                        pokedexList=(results.data.pokemon);
+            .then((results) => {
+                if ('data' in results) {
+                    if (results.data === null) {
+                        console.log(`Results.data is null =`, results.data)
                     }
                     else {
-                        console.log("Pokemon not in results");
+                        console.log(`Results.data not null =`, results.data);
+                        if ('pokemon' in results.data) {
+                            console.log(`Results.data.pokemon =`, results.data.pokemon);
+                            pokedexList = (results.data.pokemon);
+                        }
+                        else {
+                            console.log("Pokemon not in results");
+                        }
                     }
                 }
-            }
-            else {
-                console.log("Data not in results");
-            }
-        });
+                else {
+                    console.log("Data not in results");
+                }
+            });
     }
     const ids = params.ids.split(",");
+    const names = params.names.split(",");
     const types = params.types.split(",");
     const weaknesses = params.weaknesses.split(",");
     let pokemonResults = [];
@@ -103,44 +106,47 @@ const Results = (props) => {
                 <div className="col-4 mx-auto">
                     <h1 className="color-white text-center">Pokemon List</h1>
                 </div>
-            </div>
+            </div>          
             <div className="row">
                 <div className="col-7 mx-auto">
 
                     {/*<Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>*/}
+                  
+                    {(ids.length >= 1 && ids[0] !== "none") &&
                     <Table pokemons={pokemonResults} ids={ids} types={types} weaknesses={weaknesses}></Table>
+                    }
                     <div className="row">
                         <div className="col-7 mx-auto">
-                            {/*
-                            {location.state != null && location.state.errorText.length > 0 &&
+                            
+                            {(ids.length === 1 && ids[0] === "none") && 
                                 <div>
-                                    <p className="error"><span className="color-red">{location.state.errorText}</span></p>
-                                    <p className="error"><span className="color-red">{location.state.filterNames}</span></p>
-                                    <p className="error"><span className="color-red">{location.state.filterTypes}</span></p>
-                                    <p className="error"><span className="color-red">{location.state.filterWeaknesses}</span></p>
+                                    <p className="error"><span className="color-red">Error Search Criteria Not Found:</span></p>
+                                    <p className="error"><span className="color-red">Names: {names.toString().replace(/,/g,", ")}</span></p>
+                                    <p className="error"><span className="color-red">Types: {types.toString()}</span></p>
+                                    <p className="error"><span className="color-red">Weaknesses: {weaknesses.toString()}</span></p>
                                 </div>
-                            */}
+                            }
+                        
+                            {(ids.length >= 1 && ids[0] !== "none") &&
                                 <div>
                                     <p className="error"><span className="color-white">Search Criteria:</span></p>
-                                    <p className="error"><span className="color-white">Names:</span>
-                                    <ul className="color-white">
-                                        {pokemonResults.map((pokemon, idx, array) => {
-                                            return idx < pokemonResults.length-1 ? <li key={`li-${idx}`}>{`${pokemon.name}(${pokemon.id}), `}</li> : <li key={`li-${ids}`}>{` ${pokemon.name}(${pokemon.id})`}</li>
-                                        })}
-                                    </ul>
-                                    </p>
+                                    <p className="error"><span className="color-white">Names: {names.toString().replace(/,/g, ", ")}</span></p>
                                     <p className="error"><span className="color-white">Types: {types.toString()}</span></p>
                                     <p className="error"><span className="color-white">Weaknesses: {weaknesses.toString()}</span></p>
                                 </div>
+                            }
+                            {/* Test Code
                             <ul>
                                 {pokedexList2.map((element, idx, array) => {
                                     return <li key={idx}>{element.name}</li>
                                 })}
                             </ul>
+                            */}
                         </div>
                     </div>
                     <Footer></Footer>
                 </div>
+                            
             </div>
         </div>);
 }
