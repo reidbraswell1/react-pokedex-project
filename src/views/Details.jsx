@@ -1,6 +1,6 @@
 import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 import { React, useEffect, useState } from "react";
-import { Navigate, Redirect, useLocation, useParams, useNavigate } from "react-router-dom";
+import { Link, Navigate, Redirect, useLocation, useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import { getPokedexList } from "../utils/pokemonUtils";
 
@@ -200,7 +200,11 @@ const DetailsView = (props) => {
                                                                 <td>{obj1.num}</td>
                                                                 <td>{obj1.name}</td>
                                                                 <td>{pokemons.map((obj2, idx, array) => {
-                                                                    if (obj2.id.toString() === obj1.id.toString()) { return <img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img> }
+                                                                    if (obj2.num.toString() === obj1.num.toString()) { 
+                                                                        return (<Link to={`/Details/${parseInt(obj1.num)}`}>
+                                                                        <img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
+                                                                        </Link>)
+                                                                    }
                                                                 })}
                                                                 </td>
                                                             </tr>)
@@ -216,7 +220,12 @@ const DetailsView = (props) => {
                                                                     console.log(`obj2.id=`, obj2.id)
                                                                     console.log(`obj1 =`, obj1)
                                                                     if (obj2.num.toString() === obj1.num.toString()) {
-                                                                        return <td><img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img></td>
+                                                                        return <td>
+                                                                            <Link to={`/Details/${parseInt(obj1.num)}`}>
+                                                                            <img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
+                                                                            </Link>
+                                                                            </td>
+                                                                            
                                                                     }
                                                                 })}
                                                             </tr>)
