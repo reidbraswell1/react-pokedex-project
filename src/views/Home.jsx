@@ -69,7 +69,8 @@ const HomePage = (props) => {
             errorMsg = `No Data For Selected Filters:`;
         }
         if (pokemonSelectedNamesArray.length === 1 && pokemonSelectedNamesArray[0] === "All") {
-            filterNames = `Names: ${pokemonSelectedNamesArray}`
+            //filterNames = `Names: ${pokemonSelectedNamesArray}`
+            filterNames = pokemonSelectedNamesArray.toString();
         }
         else {
             let pokemonNames = [];
