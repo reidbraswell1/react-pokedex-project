@@ -12,7 +12,10 @@ const Results = (props) => {
 
     console.log(`---Begin Function Results()---`);
 
-    const [pokedexList2, setPokedexList2] = useState(props.pokedexList.pokemon);
+    //const [pokedexList2, setPokedexList2] = useState(props.pokedexList.pokemon);
+    const [pokedexList, setPokedexList] = useState([]);
+    const [pokemonResults, setPokemonResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const params = useParams();
     console.log(`Props.pokedexList =`, props.pokedexList.pokemon);
@@ -21,6 +24,7 @@ const Results = (props) => {
     console.log(`Params.types =`, params.types);
     console.log(`Params.weaknesses =`, params.weaknesses);
 
+    /*
     let pokedexList = props.pokedexList.pokemon;
     if (pokedexList.length === 0) {
         let results = getPokedexList()
@@ -45,10 +49,12 @@ const Results = (props) => {
                 }
             });
     }
+    */
     const ids = params.ids.split(",");
     const names = params.names.split(",");
     const types = params.types.split(",");
     const weaknesses = params.weaknesses.split(",");
+    /*
     let pokemonResults = [];
     ids.map((id, idx, array) => {
         pokedexList.forEach((pokemon, idx, array) => {
@@ -57,6 +63,7 @@ const Results = (props) => {
             }
         })
     })
+    */
     console.log(`Ids =`, ids);
     console.log(`Types =`, types);
     console.log(`Weaknesses =`, weaknesses);
@@ -68,7 +75,7 @@ const Results = (props) => {
 
     useEffect(() => {
         console.log(`---Begin Function useEffect()---`);
-        if (pokedexList2.length === 0) {
+        if (pokedexList.length === 0) {
             let results = getPokedexList()
                 .then((results) => {
                     if ('data' in results) {
@@ -79,7 +86,17 @@ const Results = (props) => {
                             console.log(`Results.data not null =`, results.data);
                             if ('pokemon' in results.data) {
                                 console.log(`Results.data.pokemon =`, results.data.pokemon);
-                                setPokedexList2(results.data.pokemon);
+                                setPokedexList(results.data.pokemon.slice(0));
+                                let tempArray = [];
+                                ids.map((id, idx, array) => {
+                                    results.data.pokemon.forEach((pokemon, idx, array) => {
+                                        if (pokemon.id.toString() === id.toString()) {
+                                            tempArray.push(pokemon);
+                                        }
+                                    })
+                                })
+                                setPokemonResults(tempArray.slice(0));
+                                setIsLoading(false);
                             }
                             else {
                                 console.log("Pokemon not in results");
@@ -93,61 +110,67 @@ const Results = (props) => {
         }
         console.log(`---End Function useEffect()---`)
     }, []);
-    const changeState = () => {
-        setPokedexList2(new Array({ "name": "Josh" }));
-
-    }
     console.log(`---End Function Results()---`);
 
 
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-4 mx-auto">
-                    <h1 className="color-white text-center">Pokemon List</h1>
+            {isLoading &&
+                <div className="row">
+                    <div className="col-4 mx-auto">
+                        <h1 className="text-center">...Loading...</h1>
+                    </div>
                 </div>
-            </div>          
-            <div className="row">
-                <div className="col-7 mx-auto">
-
-                    {/*<Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>*/}
-                  
-                    {(ids.length >= 1 && ids[0] !== "none") &&
-                    <Table pokemons={pokemonResults} ids={ids} types={types} weaknesses={weaknesses}></Table>
-                    }
+            }
+            {!isLoading &&
+                <div>
+                    <div className="row">
+                        <div className="col-4 mx-auto">
+                            <h1 className="color-white text-center">Pokemon List</h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-7 mx-auto">
-                            
-                            {(ids.length === 1 && ids[0] === "none") && 
-                                <div>
-                                    <p className="error"><span className="color-red">Error Search Criteria Not Found:</span></p>
-                                    <p className="error"><span className="color-red">Names: {names.toString().replace(/,/g,", ")}</span></p>
-                                    <p className="error"><span className="color-red">Types: {types.toString()}</span></p>
-                                    <p className="error"><span className="color-red">Weaknesses: {weaknesses.toString()}</span></p>
-                                </div>
-                            }
-                        
+
+                            {/*<Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>*/}
+
                             {(ids.length >= 1 && ids[0] !== "none") &&
-                                <div>
-                                    <p className="error"><span className="color-white">Search Criteria:</span></p>
-                                    <p className="error"><span className="color-white">Names: {names.toString().replace(/,/g, ", ")}</span></p>
-                                    <p className="error"><span className="color-white">Types: {types.toString()}</span></p>
-                                    <p className="error"><span className="color-white">Weaknesses: {weaknesses.toString()}</span></p>
-                                </div>
+                                <Table pokemons={pokemonResults} ids={ids} types={types} weaknesses={weaknesses}></Table>
                             }
-                            {/* Test Code
+                            <div className="row">
+                                <div className="col-7 mx-auto">
+
+                                    {(ids.length === 1 && ids[0] === "none") &&
+                                        <div>
+                                            <p className="error"><span className="color-red">Error Search Criteria Not Found:</span></p>
+                                            <p className="error"><span className="color-red">Names: {names.toString().replace(/,/g, ", ")}</span></p>
+                                            <p className="error"><span className="color-red">Types: {types.toString()}</span></p>
+                                            <p className="error"><span className="color-red">Weaknesses: {weaknesses.toString()}</span></p>
+                                        </div>
+                                    }
+
+                                    {(ids.length >= 1 && ids[0] !== "none") &&
+                                        <div>
+                                            <p className="error"><span className="color-white">Search Criteria:</span></p>
+                                            <p className="error"><span className="color-white">Names: {names.toString().replace(/,/g, ", ")}</span></p>
+                                            <p className="error"><span className="color-white">Types: {types.toString()}</span></p>
+                                            <p className="error"><span className="color-white">Weaknesses: {weaknesses.toString()}</span></p>
+                                        </div>
+                                    }
+                                    {/* Test Code
                             <ul>
                                 {pokedexList2.map((element, idx, array) => {
                                     return <li key={idx}>{element.name}</li>
                                 })}
                             </ul>
                             */}
+                                </div>
+                            </div>
+                            <Footer></Footer>
                         </div>
                     </div>
-                    <Footer></Footer>
                 </div>
-                            
-            </div>
+            }
         </div>);
 }
 export { Results };
