@@ -116,8 +116,7 @@ const Table = (props) => {
                     )}
                     </td>
                     <td key={`td-${idx}-5`}>
-                       {/* <Link className="" to={`/Details/${pokemon.id}`} state={{ "pokemon": pokemon.id, "pokemonImages": props.pokemonImages }}></Link>*/}
-                        <Link className="" to={`/Details/${pokemon.id}`} state={{"pokemon":pokemon}}>
+                        <Link className="" to={`/Details/${pokemon.id}`} state={{}}>
                             <img className="border rounded imgLink mx-auto d-block" style={{ marginLeft: ".5rem", padding: "2px" }} src={pokemon.img} alt="Pokemon" width="40rem" loading="lazy"></img>
                         </Link>
                     </td>
