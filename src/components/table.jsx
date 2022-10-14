@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const Table = (props) => {
-
     console.log(`---Begin Function Table()---`);
 
-    const [pokemons, setPokemon] = useState(props.pokemons);
+    const [pokemons, setPokemons] = useState(props.pokemons);
 
     console.log(`Props=`, props);
     console.log(`Props.pokemons =`, props.pokemons)
@@ -29,28 +28,28 @@ const Table = (props) => {
                 nbrDown.sort((a, b) => {
                     return b.id < a.id;
                 });
-                setPokemon(nbrDown);
+                setPokemons(nbrDown);
                 break;
             case "numeric-sort-up":
                 let nbrUp = pokemons.slice(0);
                 nbrUp.sort((a, b) => {
                     return b.num > a.num;
                 });
-                setPokemon(nbrUp);
+                setPokemons(nbrUp);
                 break;
             case "alpha-sort-down":
                 let alphaDown = pokemons.slice(0);
                 alphaDown.sort((a, b) => {
                     return b.name < a.name;
                 });
-                setPokemon(alphaDown);
+                setPokemons(alphaDown);
                 break;
             case "alpha-sort-up":
                 let alphaUp = pokemons.slice(0);
                 alphaUp.sort((a, b) => {
                     return b.name > a.name;
                 });
-                setPokemon(alphaUp);
+                setPokemons(alphaUp);
                 break;
             default:
                 break;
@@ -95,7 +94,7 @@ const Table = (props) => {
             </tr>
         </thead>
         <tbody>
-            {props.pokemons.map((pokemon, idx, array) => {
+            {pokemons.map((pokemon, idx, array) => {
                 console.log("Pokemon in Table=",pokemon)
                 return (<tr key={`tr-${idx}-1`} id={`tr-${idx}-1`}>
                     <td key={`td-${idx}-1`}>{pokemon.num}</td>
