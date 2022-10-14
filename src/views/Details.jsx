@@ -142,6 +142,16 @@ const DetailsView = (props) => {
         }, 1000);
     }
 
+    const processClick = (id = 0) => {
+        console.log("hello");
+        pokemons.map((obj, idx, array) => {
+            if (obj.id.toString() === id.toString()) {
+                setPokemon(obj);
+                console.log(obj);
+            }
+        })
+    }
+
 
     return (
         <div className="container-fluid">
@@ -200,10 +210,12 @@ const DetailsView = (props) => {
                                                                 <td>{obj1.num}</td>
                                                                 <td>{obj1.name}</td>
                                                                 <td>{pokemons.map((obj2, idx, array) => {
-                                                                    if (obj2.num.toString() === obj1.num.toString()) { 
-                                                                        return (<Link to={`/Details/${parseInt(obj1.num)}`}>
-                                                                        <img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
-                                                                        </Link>)
+                                                                    if (obj2.num.toString() === obj1.num.toString()) {
+                                                                        return (
+                                                                            <a href={`/Details/${parseInt(obj1.num)}`}>
+                                                                                <img className="border rounded imgLink mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
+                                                                            </a>
+                                                                        )
                                                                     }
                                                                 })}
                                                                 </td>
@@ -221,11 +233,11 @@ const DetailsView = (props) => {
                                                                     console.log(`obj1 =`, obj1)
                                                                     if (obj2.num.toString() === obj1.num.toString()) {
                                                                         return <td>
-                                                                            <Link to={`/Details/${parseInt(obj1.num)}`}>
-                                                                            <img className="mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
-                                                                            </Link>
-                                                                            </td>
-                                                                            
+                                                                            <a href={`/Details/${parseInt(obj1.num)}`}>
+                                                                                <img className="border rounded imgLink mx-auto d-block" src={obj2.img} width="40rem" alt="Pokemon"></img>
+                                                                            </a>
+                                                                        </td>
+
                                                                     }
                                                                 })}
                                                             </tr>)
