@@ -1,5 +1,5 @@
 const getPokedexList = async (urlTest = false,) => {
-    console.log(`---Begin Function getPokedexList()---`);
+    console.log(`---Begin Function ${getPokedexList.name}()---`);
 
     const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
     const GOOD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
@@ -13,24 +13,26 @@ const getPokedexList = async (urlTest = false,) => {
         URL = GOOD_URL;
     }
     try {
-        const response = await fetch(GOOD_URL)
+        const response = await fetch(URL);
         if (response.ok) {
             const result = await response.json();
+            console.log(`${getPokedexList.name} Result =`,result);
             return ({ "data": result });
         }
         else {
-            return ({"err":response.status})
+            console.log(`${getPokedexList.name} Error Result =`,response.status);
+            return ({"err":`An Error Occurred Fetching From URL ${URL}. Response Code = ${response.status}`});
         }
     }
     catch (err) {
-        console.log(`Fetch Error =`, err);
+        console.log(`${getPokedexList.name} Fetch Error =`, err);
     }
-    console.log(`---End Function getPokedexList()---`);
+    console.log(`---End Function ${getPokedexList.name}()---`);
 }
 
 const getPokemonWeaknesses = (list = [{ "weaknesses": "" }]) => {
 
-    console.log(`---Begin Function getPokemonWeaknesses()---`);
+    console.log(`---Begin Function ${getPokemonWeaknesses.name}()---`);
 
     let pokemonWeaknesses = [];
 
@@ -45,13 +47,14 @@ const getPokemonWeaknesses = (list = [{ "weaknesses": "" }]) => {
         });
     })
     pokemonWeaknesses.sort();
-    console.log(`---End Function getPokemonWeaknesses()---`);
+    console.log(`---End Function ${getPokemonWeaknesses.name}()---`);
 
     return pokemonWeaknesses;
 }
 
 const getPokemonTypes = (list = [{ "type": "" }]) => {
-    console.log(`---Begin Function getPokemonTypes()---`);
+
+    console.log(`---Begin Function ${getPokemonTypes.name}()---`);
 
     let pokemonTypes = [];
 
@@ -66,13 +69,14 @@ const getPokemonTypes = (list = [{ "type": "" }]) => {
         });
     })
 
-    console.log(`---End Function getPokemonTypes()---`);
+    console.log(`---End Function ${getPokemonTypes.name}()---`);
     pokemonTypes.sort();
     return pokemonTypes;
 }
 
 const getPokemonNames = (list = [{ "id": "0", "name": "" }]) => {
-    console.log(`---Begin Function getPokemonNames()---`);
+
+    console.log(`---Begin Function ${getPokemonNames.name}()---`);
 
     let pokemonNamesId = [];
 
@@ -86,7 +90,8 @@ const getPokemonNames = (list = [{ "id": "0", "name": "" }]) => {
             pokemonNamesId.push({ "id": element.id, "name": element.name });
         }
     });
-    console.log(`---End Function getPokemonNames()---`);
+
+    console.log(`---End Function ${getPokemonNames.name}()---`);
 
     pokemonNamesId.sort((a, b) => {
         return b.name < a.name;
@@ -94,32 +99,9 @@ const getPokemonNames = (list = [{ "id": "0", "name": "" }]) => {
     return pokemonNamesId;
 }
 
-const getPokemonImages = (list = [{ "id": "0", "img": "" }]) => {
-    console.log(`---Begin Function getPokemonImages()---`);
-
-    let pokemonImagesId = [];
-
-    list.forEach((element) => {
-        if ('name' in pokemonImagesId) {
-            if (pokemonImagesId.name.includes(element.name)) {
-
-            }
-        }
-        else {
-            pokemonImagesId.push({ "id": element.id, "img": element.img });
-        }
-    });
-    console.log(`---End Function getPokemonImages()---`);
-
-    pokemonImagesId.sort((a, b) => {
-        return b.id < a.id;
-    });
-    return pokemonImagesId;
-}
-
 const filterPokemon = (filterProps = { "name": [], "type": [], "weaknesses": [] }, pokemonList = [{ "name": "", "type": "", "weaknesses": "" }]) => {
 
-    console.log(`---Begin filterPokemon()---`);
+    console.log(`---Begin ${filterPokemon.name}()---`);
 
     let filteredPokemonList = filterPokemonName(filterProps.name, pokemonList);
     filteredPokemonList = filterPokemonTypes(filterProps.type, filteredPokemonList);
@@ -139,14 +121,14 @@ const filterPokemon = (filterProps = { "name": [], "type": [], "weaknesses": [] 
         });
     });
 
-    console.log(`FilteredPokemonList=`, filteredPokemonList);
-    console.log(`---End Function filterPokemon()---`);
+    console.log(`${filterPokemon.name} FilteredPokemonList=`, filteredPokemonList);
+    console.log(`---End Function ${filterPokemon.name}()---`);
     return filteredPokemonList;
 }
 
 const filterPokemonName = (nameProps = [], pokemonList = [{ "id": "" }]) => {
 
-    console.log(`---Begin Function filterPokemonName()---`);
+    console.log(`---Begin Function ${filterPokemonName.name}()---`);
 
     let filteredPokemonList = [];
     if (nameProps.length === 1 && nameProps[0] === "All") {
@@ -160,13 +142,13 @@ const filterPokemonName = (nameProps = [], pokemonList = [{ "id": "" }]) => {
             }
         }
     }
-    console.log(`---End Function filterPokemonName()---`);
+    console.log(`---End Function ${filterPokemonName.name}()---`);
     return filteredPokemonList;
 }
 
 const filterPokemonTypes = (typeProps = [], pokemonList = [{ "type": [] }]) => {
 
-    console.log(`---Begin Function filterPokemonType()---`);
+    console.log(`---Begin Function ${filterPokemonTypes.name}()---`);
 
     let filteredPokemonList = [];
     if (typeProps.length === 1 && typeProps[0] === "All") {
@@ -191,15 +173,15 @@ const filterPokemonTypes = (typeProps = [], pokemonList = [{ "type": [] }]) => {
             }
         }
     }
-    console.log(`FilteredTypes=`, filteredPokemonList);
-    console.log(`---End Function filterPokemonType()---`);
+    console.log(`${filterPokemonTypes.name} FilteredTypes=`, filteredPokemonList);
+    console.log(`---End Function ${filterPokemonTypes.name}()---`);
     return filteredPokemonList;
 
 }
 
 const filterPokemonWeaknesses = (weaknessProps = [], pokemonList = [{ "weaknesses": "" }]) => {
 
-    console.log(`---Begin Function filterPokemonWeaknesses()---`);
+    console.log(`---Begin Function ${filterPokemonWeaknesses.name}()---`);
 
     let filteredPokemonList = [];
     if (weaknessProps.length === 1 && weaknessProps[0] === "All") {
@@ -224,10 +206,10 @@ const filterPokemonWeaknesses = (weaknessProps = [], pokemonList = [{ "weaknesse
             }
         }
     }
-    console.log(`FilteredWeaknesses=`, filteredPokemonList);
-    console.log(`---End Function filterPokemonWeaknesses()---`);
+    console.log(`${filterPokemonWeaknesses.name} FilteredWeaknesses=`, filteredPokemonList);
+    console.log(`---End Function ${filterPokemonWeaknesses.name}()---`);
     return filteredPokemonList;
 
 }
 
-export { getPokedexList, getPokemonImages, getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
+export { getPokedexList, getPokemonWeaknesses, getPokemonTypes, getPokemonNames, filterPokemon };
