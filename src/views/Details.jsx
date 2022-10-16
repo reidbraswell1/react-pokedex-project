@@ -9,16 +9,16 @@ let timeout = null;
 
 const DetailsView = (props) => {
 
-    console.log(`---Begin Function DetailsView()---`);
+    console.log(`---Begin Function ${DetailsView.name}()---`);
 
     const params = useParams();
 
     const location = useLocation();
     const navigate = useNavigate();
 
-    console.log(`Props =`, props);
-    console.log(`Params =`, params);
-    console.log(`Location =`, location);
+    console.log(`${DetailsView.name} Props =`, props);
+    console.log(`${DetailsView.name} Params =`, params);
+    console.log(`${DetailsView.name} Location =`, location);
 
     const [pokemon, setPokemon] = useState([]);
     const [pokemons, setPokemons] = useState([]);
@@ -26,21 +26,18 @@ const DetailsView = (props) => {
 
     const [seconds, setSeconds] = useState(6);
 
-    console.log(`Pokemon`, pokemon);
-
     useEffect(() => {
-        console.log(`---Begin Function useEffect()---`);
+        console.log(`---Begin Function ${useEffect.name}()---`);
         getPokedexList()
             .then((results) => {
                 if ('data' in results) {
                     if (results.data === null) {
-                        console.log(`Results.data is null =`, results.data)
+                        console.log(`${useEffect.name} Results.data is null =`, results.data)
                     }
                     else {
-                        console.log(`Results.data not null =`, results.data);
+                        console.log(`${useEffect.name} Results.data not null =`, results.data);
                         if ('pokemon' in results.data) {
-                            console.log(`Results.data.pokemon =`, results.data.pokemon);
-                            console.log("Params.id=", params.id);
+                            console.log(`${useEffect.name} Results.data.pokemon =`, results.data.pokemon);
                             const reslt = (results.data.pokemon);
                             reslt.forEach((obj, idx, array) => {
                                 if (obj.id.toString() === params.id.toString()) {
@@ -49,16 +46,16 @@ const DetailsView = (props) => {
                                 }
                             })
                             setPokemons(reslt);
-                            console.log("Pokemon=", pokemon);
+                            console.log(`${useEffect.name} Pokemon =`, pokemon);
                             setIsLoading(false);
                         }
                         else {
-                            console.log("Pokemon not in results");
+                            console.log(`${useEffect.name} Pokemon not in results`);
                         }
                     }
                 }
                 else {
-                    console.log("Data not in results");
+                    console.log(`${useEffect.name} Data not in results`);
                 }
             })
 
@@ -76,7 +73,7 @@ const DetailsView = (props) => {
             console.log(`---End useEffect Callback Function Non Null State---`);
         }
         */
-        console.log(`---End Function useEffect()---`);
+        console.log(`---End Function ${useEffect.name}()---`);
     }, [])
 
     mySeconds = seconds;
@@ -99,7 +96,7 @@ const DetailsView = (props) => {
             {isLoading &&
                 <div className="row">
                     <div className="col-4 mx-auto">
-                        <h1>...Fetching Data...</h1>
+                        <h1>...Loading...</h1>
                     </div>
                 </div>
             }
