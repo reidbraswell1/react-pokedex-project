@@ -2,26 +2,28 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const Table = (props) => {
-    console.log(`---Begin Function Table()---`);
+    console.log(`---Begin Function ${Table.name}()---`);
 
     const [pokemons, setPokemons] = useState(props.pokemons);
 
-    console.log(`Props=`, props);
-    console.log(`Props.pokemons =`, props.pokemons)
-    console.log(`Pokemons =`,pokemons);
-    console.log(`Props.ids =`,props.ids);
-    console.log(`Props.types =`,props.types);
-    console.log(`Props.weaknesses =`,props.weaknesses);
-    console.log(`Pokemons =`,pokemons);
+    console.log(`${Table.name} Props=`, props);
+    console.log(`${Table.name} Props.pokemons =`, props.pokemons)
+    console.log(`${Table.name} Pokemons =`,pokemons);
+    console.log(`${Table.name} Props.ids =`,props.ids);
+    console.log(`${Table.name} Props.types =`,props.types);
+    console.log(`${Table.name} Props.weaknesses =`,props.weaknesses);
+    console.log(`${Table.name} Pokemons =`,pokemons);
 
     useEffect(() => {
-        console.log(`---Begin Function useEffect()---`);
-        console.log(`---End Function useEffect()---`);
+        console.log(`---Begin Function ${useEffect.name}()---`);
+        console.log(`---End Function ${useEffect.name}()---`);
     }, [])
 
     const processSort = (event) => {
-        console.log(`Begin Function processSort()---`);
-        console.log(`Event.target.id =`, event.target.id);
+
+        console.log(`Begin Function ${processSort.name}()---`);
+        console.log(`${processSort.name} Event.target.id =`, event.target.id);
+
         switch (event.target.id) {
             case "numeric-sort-down":
                 let nbrDown = pokemons.slice(0);
@@ -54,10 +56,10 @@ const Table = (props) => {
             default:
                 break;
         }
-        console.log(`End Function processSort()---`);
+        console.log(`End Function ${processSort.name}()---`);
     }
 
-    console.log(`---End Function Table()---`);
+    console.log(`---End Function ${Table.name}()---`);
 
     return (<table className="table table-striped table-bordered background-color-white w-auto mx-auto">
         <caption className="text-center" style={{ captionSide: "top" }}>Table of Pokemons {props.pokemons.length} Rows Returned</caption>
@@ -95,7 +97,6 @@ const Table = (props) => {
         </thead>
         <tbody>
             {pokemons.map((pokemon, idx, array) => {
-                console.log("Pokemon in Table=",pokemon)
                 return (<tr key={`tr-${idx}-1`} id={`tr-${idx}-1`}>
                     <td key={`td-${idx}-1`}>{pokemon.num}</td>
                     <td key={`td-${idx}-2`}>{pokemon.name}</td>
