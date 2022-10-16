@@ -160,6 +160,7 @@ const HomePage = (props) => {
 
     return (<div className="container-fluid">
         <div className="row">
+            <h1 className="text-center color-white">{props.pageTitle}</h1>
             <div className="col-4 my-center border rounded pb-3 pt-3">
                 <form className="" onSubmit={processSubmission}>
                     <div className="form-group">
