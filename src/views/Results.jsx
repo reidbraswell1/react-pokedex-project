@@ -10,86 +10,53 @@ import ErrorBoundary from "react-error-boundary";
 
 const Results = (props) => {
 
-    console.log(`---Begin Function Results()---`);
+    console.log(`---Begin Function ${Results.name}()---`);
 
-    //const [pokedexList2, setPokedexList2] = useState(props.pokedexList.pokemon);
     const [pokedexList, setPokedexList] = useState([]);
     const [pokemonResults, setPokemonResults] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("Init Message");
 
     const params = useParams();
-    console.log(`Props.pokedexList =`, props.pokedexList.pokemon);
-    console.log(`Params.ids =`, params.ids);
-    console.log(`Prarams.names =`, params.names);
-    console.log(`Params.types =`, params.types);
-    console.log(`Params.weaknesses =`, params.weaknesses);
+    
+    console.log(`${Results.name} Params.ids =`, params.ids);
+    console.log(`${Results.name} Prarams.names =`, params.names);
+    console.log(`${Results.name} Params.types =`, params.types);
+    console.log(`${Results.name} Params.weaknesses =`, params.weaknesses);
 
-    /*
-    let pokedexList = props.pokedexList.pokemon;
-    if (pokedexList.length === 0) {
-        let results = getPokedexList()
-            .then((results) => {
-                if ('data' in results) {
-                    if (results.data === null) {
-                        console.log(`Results.data is null =`, results.data)
-                    }
-                    else {
-                        console.log(`Results.data not null =`, results.data);
-                        if ('pokemon' in results.data) {
-                            console.log(`Results.data.pokemon =`, results.data.pokemon);
-                            pokedexList = (results.data.pokemon);
-                        }
-                        else {
-                            console.log("Pokemon not in results");
-                        }
-                    }
-                }
-                else {
-                    console.log("Data not in results");
-                }
-            });
-    }
-    */
     const ids = params.ids.split(",");
     const names = params.names.split(",");
     const types = params.types.split(",");
     const weaknesses = params.weaknesses.split(",");
-    /*
-    let pokemonResults = [];
-    ids.map((id, idx, array) => {
-        pokedexList.forEach((pokemon, idx, array) => {
-            if (pokemon.id.toString() === id.toString()) {
-                pokemonResults.push(pokemon);
-            }
-        })
-    })
-    */
-    console.log(`Ids =`, ids);
-    console.log(`Types =`, types);
-    console.log(`Weaknesses =`, weaknesses);
-    console.log(`Pokemons =`, pokemonResults);
+   
+    console.log(`${Results.name} Ids =`, ids);
+    console.log(`${Results.name} Types =`, types);
+    console.log(`${Results.name} Weaknesses =`, weaknesses);
+    console.log(`${Results.name} Pokemons =`, pokemonResults);
 
     const location = useLocation();
     const navigate = useNavigate();
-    console.log(`Location.state=`, location)
+
+    console.log(`${Results.name} Location.state=`, location)
 
     useEffect(() => {
-        console.log(`---Begin Function useEffect()---`);
+        console.log(`---Begin Function ${useEffect.name}()---`);
         if (pokedexList.length === 0) {
-            let results = getPokedexList()
-                .then((results) => {
-                    if ('data' in results) {
-                        if (results.data === null) {
-                            console.log(`Results.data is null =`, results.data)
+            let results = getPokedexList(false);
+                results.then((reslts) => {
+                    if ('data' in reslts) {
+                        if (reslts.data === null) {
+                            console.log(`${useEffect.name} Results.data is null =`, reslts.data)
                         }
                         else {
-                            console.log(`Results.data not null =`, results.data);
-                            if ('pokemon' in results.data) {
-                                console.log(`Results.data.pokemon =`, results.data.pokemon);
-                                setPokedexList(results.data.pokemon.slice(0));
+                            console.log(`${useEffect.name} Results.data not null =`, reslts.data);
+                            if ('pokemon' in reslts.data) {
+                                console.log(`${useEffect.name} Results.data.pokemon =`, reslts.data.pokemon);
+                                setPokedexList(reslts.data.pokemon.slice(0));
                                 let tempArray = [];
                                 ids.map((id, idx, array) => {
-                                    results.data.pokemon.forEach((pokemon, idx, array) => {
+                                    reslts.data.pokemon.forEach((pokemon, idx, array) => {
                                         if (pokemon.id.toString() === id.toString()) {
                                             tempArray.push(pokemon);
                                         }
@@ -99,30 +66,35 @@ const Results = (props) => {
                                 setIsLoading(false);
                             }
                             else {
-                                console.log("Pokemon not in results");
+                                console.log(`${useEffect.name} Pokemon not in results`);
                             }
                         }
                     }
-                    else {
-                        console.log("Data not in results");
+                    if('err' in reslts) {
+                        console.log(`${useEffect.name} Results Error =`, reslts.err);
+                        setErrorMessage(reslts.err.toString());
+                        setIsError(true);
                     }
+                })
+                results.catch((error) => {
+                    console.log(`${useEffect.name}() Promise Error =`,error);
                 });
         }
-        console.log(`---End Function useEffect()---`)
+        console.log(`---End Function ${useEffect.name}()---`)
     }, []);
-    console.log(`---End Function Results()---`);
+    console.log(`---End Function ${Results.name}()---`);
 
 
     return (
         <div className="container-fluid">
-            {isLoading &&
+            {isLoading && !isError &&
                 <div className="row">
                     <div className="col-4 mx-auto">
-                        <h1 className="text-center">...Loading...</h1>
+                        <h1 className="text-center">...Fetching Data...</h1>
                     </div>
                 </div>
             }
-            {!isLoading &&
+            {!isLoading && !isError &&
                 <div>
                     <div className="row">
                         <div className="col-4 mx-auto">
@@ -131,9 +103,6 @@ const Results = (props) => {
                     </div>
                     <div className="row">
                         <div className="col-7 mx-auto">
-
-                            {/*<Table pokemons={pokemonResults} pokemonImages={location.state.pokemonImages} ids={params.ids} weaknesses={params.weaknesses} types={params.types}></Table>*/}
-
                             {(ids.length >= 1 && ids[0] !== "none") &&
                                 <Table pokemons={pokemonResults} ids={ids} types={types} weaknesses={weaknesses}></Table>
                             }
@@ -157,19 +126,15 @@ const Results = (props) => {
                                             <p className="error"><span className="color-white">Weaknesses: {weaknesses.toString()}</span></p>
                                         </div>
                                     }
-                                    {/* Test Code
-                            <ul>
-                                {pokedexList2.map((element, idx, array) => {
-                                    return <li key={idx}>{element.name}</li>
-                                })}
-                            </ul>
-                            */}
                                 </div>
                             </div>
                             <Footer></Footer>
                         </div>
                     </div>
                 </div>
+            }
+            {isError && 
+                <p className="text-danger">{errorMessage}</p>
             }
         </div>);
 }
