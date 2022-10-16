@@ -90,16 +90,14 @@ const Results = (props) => {
             {isLoading && !isError &&
                 <div className="row">
                     <div className="col-4 mx-auto">
-                        <h1 className="text-center">...Fetching Data...</h1>
+                        <h1 className="text-center">...Loading...</h1>
                     </div>
                 </div>
             }
             {!isLoading && !isError &&
                 <div>
                     <div className="row">
-                        <div className="col-4 mx-auto">
-                            <h1 className="color-white text-center">Pokemon List</h1>
-                        </div>
+                    <h1 className="color-white text-center">{props.pageTitle}</h1>
                     </div>
                     <div className="row">
                         <div className="col-7 mx-auto">
