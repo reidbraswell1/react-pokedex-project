@@ -2,28 +2,65 @@ import React, { useEffect } from "react";
 //import { Navigate } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { filterPokemon } from "../utils/pokemonUtils";
+import { filterPokemon } from "../utils/pokemonUtils.js";
+import { getPokedexList } from "../utils/pokemonUtils.js";
+import { getPokemonNames } from "../utils/pokemonUtils.js";
+import { getPokemonTypes } from "../utils/pokemonUtils.js";
+import { getPokemonWeaknesses } from "../utils/pokemonUtils.js";
 
 const HomePage = (props) => {
 
-    console.log(`---Begin Function HomePage()---`);
-    console.log(`Props`, props);
+    console.log(`---Begin Function ${HomePage.name}()---`);
+    console.log(`${HomePage.name} Props =`, props);
     const navigate = useNavigate();
 
-    const [results, setResults] = useState([]);
+    const [names, setNames] = useState([]);
+    const [types, setTypes] = useState([]);
+    const [weaknesses, setWeaknesses] = useState([]);
+    const [pokemonList, setPokemonList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log(`---Begin Function useEffect()---`);
-        console.log(results);
-        console.log(results.length);
-
-        //navigate("/results",{state:{results},replace:true})
-        console.log(`---Begin Function useEffect()---`);
-    }, [results])
+        console.log(`---Begin Function ${useEffect.name}()---`);
+        let results = getPokedexList()
+            .then((reslts) => {
+                if ('data' in reslts) {
+                    if (reslts.data === null) {
+                        console.log(`Results.data is null =`, reslts.data)
+                    }
+                    else {
+                        console.log(`Results.data not null =`, reslts.data);
+                        if ('pokemon' in reslts.data) {
+                            console.log(`Results.data.pokemon =`, reslts.data.pokemon);
+                            let pokemonNames = getPokemonNames(reslts.data.pokemon.slice(0));
+                            let pokemonTypes = getPokemonTypes(reslts.data.pokemon.slice(0));
+                            let pokemonWeaknesses = getPokemonWeaknesses(reslts.data.pokemon.slice(0));
+                            let pokemons = reslts.data.pokemon;
+                            setNames(pokemonNames.slice(0));
+                            setTypes(pokemonTypes.slice(0));
+                            setWeaknesses(pokemonWeaknesses.slice(0));
+                            setPokemonList(pokemons.slice(0));
+                            setIsLoading(false);
+                        }
+                        else {
+                            console.log("Pokemon not in results");
+                        }
+                    }
+                }
+                else {
+                    console.log("Data not in results");
+                }
+            })
+            .catch((error) => {
+                console.log(`${useEffect.name} Promise Error =`,error);
+            });
+        console.log(`---End Function ${useEffect.name}()---`);
+    }, [])
 
     const processSubmission = (event) => {
+        console.log(`Begin Function ${processSubmission.name}()`);
         event.preventDefault();
-        console.log(`Event`, event);
+        console.log(`${processSubmission.name} Event =`, event);
         const pokemonName = document.getElementById("pokemon-name");
         let pokemonSelectedNamesArray = [];
         for (let i = 0, count = 0; i < pokemonName.options.length; i++) {
@@ -48,11 +85,11 @@ const HomePage = (props) => {
                 count++;
             }
         }
-        console.log(`PokemonSelectedNames=`, pokemonSelectedNamesArray);
-        console.log(`PokemonSelectedTypes=`, pokemonSelectedTypesArray);
-        console.log(`PokemonSelectedWeaknesses=`, pokemonSelectedWeaknessesArray);
-        let filteredPokemon = filterPokemon({ "name": pokemonSelectedNamesArray, "type": pokemonSelectedTypesArray, "weaknesses": pokemonSelectedWeaknessesArray }, props.pokemonList.pokemon)
-        console.log(`FilteredPokemonList=`, filteredPokemon);
+        console.log(`${processSubmission.name} PokemonSelectedNames =`, pokemonSelectedNamesArray);
+        console.log(`${processSubmission.name} PokemonSelectedTypes =`, pokemonSelectedTypesArray);
+        console.log(`${processSubmission.name}PokemonSelectedWeaknesses =`, pokemonSelectedWeaknessesArray);
+        let filteredPokemon = filterPokemon({ "name": pokemonSelectedNamesArray, "type": pokemonSelectedTypesArray, "weaknesses": pokemonSelectedWeaknessesArray }, pokemonList);
+        console.log(`${processSubmission.name} FilteredPokemonList =`, filteredPokemon);
         let errorMsg = "";
         let errorNames = "";
         let errorTypes = "";
@@ -62,21 +99,24 @@ const HomePage = (props) => {
         let filterTypes = "";
         let filterWeaknesses = "";
         if (filteredPokemon.length > 0) {
-            setResults(filteredPokemon);
+            //setResults(filteredPokemon);
             filterMsg = "Search Criteria:"
         }
         else {
             errorMsg = `No Data For Selected Filters:`;
         }
         if (pokemonSelectedNamesArray.length === 1 && pokemonSelectedNamesArray[0] === "All") {
-            //filterNames = `Names: ${pokemonSelectedNamesArray}`
             filterNames = pokemonSelectedNamesArray.toString();
         }
         else {
             let pokemonNames = [];
             pokemonSelectedNamesArray.forEach((element, index) => {
 
-                pokemonNames.push(props.pokemonNames[index].name);
+                names.forEach((name, idx, array) => {
+                    if (element.toString() === name.id.toString()) {
+                        pokemonNames.push(name.name);
+                    }
+                })
             })
             filterNames = `${pokemonNames.toString()}`;
         }
@@ -84,20 +124,20 @@ const HomePage = (props) => {
         filterWeaknesses = `Weaknesses: ${pokemonSelectedWeaknessesArray}`;
 
         let filteredPokemonIds = [];
-        filteredPokemon.forEach((obj, index, array) =>{
+        filteredPokemon.forEach((obj, index, array) => {
             filteredPokemonIds.push(obj.id)
         })
 
-        if(filteredPokemonIds.length === 0) {
+        if (filteredPokemonIds.length === 0) {
             navigate(`/Results/none/${pokemonSelectedNamesArray}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
         }
         else {
             navigate(`/Results/${filteredPokemonIds}/${filterNames}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`);
         }
-        //navigate(`/results/${filteredPokemonIds}/${pokemonSelectedTypesArray}/${pokemonSelectedWeaknessesArray}`, { state: { pokemons: filteredPokemon, pokemonImages: props.pokemonImages, errorText: errorMsg, filterText: filterMsg, filterNames: filterNames, filterTypes: filterTypes, filterWeaknesses: filterWeaknesses, weaknesses: pokemonSelectedWeaknessesArray, type: pokemonSelectedTypesArray } });
     }
 
     const resetLinks = (event) => {
+        console.log(`---Begin Function ${resetLinks.name}()---`);
         event.preventDefault();
         switch (event.target.id) {
             case "pokemon-name-reset":
@@ -113,9 +153,10 @@ const HomePage = (props) => {
                 console.log(`Unknown Reset Event`, event.target.id);
                 break;
         }
+        console.log(`---End Function ${resetLinks.name}()---`)
     }
 
-    console.log(`---End Function HomePage()---`);
+    console.log(`---End Function ${HomePage.name}()---`);
 
     return (<div className="container-fluid">
         <div className="row">
@@ -124,8 +165,13 @@ const HomePage = (props) => {
                     <div className="form-group">
                         <label className="color-white" htmlFor="pokemonName">Pokemon Name</label>
                         <select className="form-select" id="pokemon-name" name="pokemonName" aria-label="Pokemon Name" multiple="true">
-                            <option id="pokemon-name-all" value="All" selected="true">All</option>
-                            {props.pokemonNames.map((value, index, array) => {
+                            {isLoading &&
+                                <option id="names-loading">...Fetching Data...</option>
+                            }
+                            {!isLoading &&
+                                <option id="pokemon-name-all" value="All" selected="true">All</option>
+                            }
+                            {names.map((value, index, array) => {
                                 return (<option id={`pokemon-name-${index}`} value={value.id}>{value.name}</option>)
                             })}
                         </select>
@@ -136,8 +182,13 @@ const HomePage = (props) => {
                     <div className="form-group">
                         <label className="color-white" for="pokemonType">Pokemon Type</label>
                         <select className="form-select" id="pokemon-type" name="pokemonType" aria-label="Pokemon Type" multiple="true">
-                            <option id="pokemon-type-all" value="All" selected="true">All</option>
-                            {props.pokemonTypes.map((value, index, array) => {
+                            {isLoading &&
+                                <option id="types-loading">...Fetching Data...</option>
+                            }
+                            {!isLoading &&
+                                <option id="pokemon-name-all" value="All" selected="true">All</option>
+                            }
+                            {types.map((value, index, array) => {
                                 return (<option id={`pokemon-type-${index}`} value={value}>{value}</option>)
                             })}
                         </select>
@@ -148,8 +199,13 @@ const HomePage = (props) => {
                     <div className="form-group">
                         <label className="color-white" for="pokemonWeakness">Pokemon Weakness</label>
                         <select className="form-select" id="pokemon-weakness" name="pokemonWeakness" aria-label="Pokemon Weakness" multiple="true">
-                            <option id="pokemon-weakness-all" value="All" selected="true">All</option>
-                            {props.pokemonWeaknesses.map((value, index, array) => {
+                            {isLoading &&
+                                <option id="weaknesses-loading">...Fetching Data...</option>
+                            }
+                            {!isLoading &&
+                                <option id="pokemon-name-all" value="All" selected="true">All</option>
+                            }
+                            {weaknesses.map((value, index, array) => {
                                 return (<option id={`pokemon-weakness-${index}`} value={value}>{value}</option>)
                             })}
                         </select>
@@ -161,10 +217,6 @@ const HomePage = (props) => {
                 </form>
             </div>
         </div>
-        {/*
-                results.length > 0 && <Navigate to="/results" results={results} state={results}></Navigate>}
-                                */}
-
     </div>)
 }
 export { HomePage };
