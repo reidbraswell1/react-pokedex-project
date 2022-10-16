@@ -33,8 +33,8 @@ const App = (props) => {
         </ul>
       </nav>
       <Routes>
-          <Route exact path="/" element={<HomePage> </HomePage>}end></Route>
-          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<Results></Results>}></Route>
+          <Route exact path="/" element={<HomePage pageTitle="Pokemon Search"> </HomePage>}end></Route>
+          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<Results pageTitle="Pokemon Search Results"></Results>}></Route>
           <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
