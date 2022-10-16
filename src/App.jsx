@@ -1,24 +1,14 @@
 import { React, useEffect, useState } from "react";
 import { BrowserRouter, NavLink, Redirect, Routes, Route } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
 import "./App.css";
-import { PokedexPage } from "./pages/pokedex.page.jsx";
 import { HomePage } from "./views/Home.jsx";
 import { Results } from "./views/Results.jsx";
 import { DetailsView } from "./views/Details.jsx";
-import { getPokemonNames } from "./utils/pokemonUtils";
-import { getPokemonTypes } from "./utils/pokemonUtils";
-import { getPokemonWeaknesses } from "./utils/pokemonUtils";
-import { getPokemonImages } from "./utils/pokemonUtils";
 
 const App = (props) => {
 
-  //const { pathname } = useLocation();
-  console.log(`---Begin Function App()---`);
-  console.log(`Props=`,props);
+  console.log(`---Begin Function ${App.name}()---`);
 
-  //const [ pokedexList, setPokedexList ] = useState({"pokemon":[{"id":"0","num":"000","name":"Name","type":["Type"],"weaknesses":["Weaknesses"],"img":"https://static.vecteezy.com/system/resources/previews/000/440/566/original/vector-picture-icon.jpg"}]});
-  const [ pokedexList, setPokedexList ] = useState({"pokemon":[]});
   const [ types, setTypes ] = useState([]);
   const [ weaknesses, setWeaknesses ] = useState([]);
   const [ names, setNames ] = useState([{"id":0,"name":""}]);
@@ -27,59 +17,11 @@ const App = (props) => {
   const [ errorTest, setErrorTest ] = useState(false);
   
   useEffect(() => {
-    console.log(`---Begin useEffect()---`);
-    getPokedexList();
-    console.log(`---End useEffect()---`)
+    console.log(`---Begin ${useEffect.name}()---`);
+    console.log(`---End ${useEffect.name}()---`)
   },[]);
 
-  const getPokedexList = () => {
-    console.log(`---Begin Function getPokedexList()---`);
-
-    const BAD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.jsons"
-    const GOOD_URL = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
-    let URL = "";
-
-    // Set URL to the good url or bad based on the errTest prop
-    if(errorTest) {
-        URL = BAD_URL;
-    }
-    else {
-        URL = GOOD_URL;
-    }
-    fetch(URL)
-        .then((response) => {
-            if(response.ok) { 
-                return response.json()
-            }
-            else {
-                throw new Error("Unknown Network Error Has Occurred");
-            }
-        })
-        .then((data) => {
-            console.log(`Data=`,data);
-            setPokedexList(data);
-            let weaknesses = getPokemonWeaknesses(data.pokemon);
-            let types = getPokemonTypes(data.pokemon);
-            let names = getPokemonNames(data.pokemon);
-            let images = getPokemonImages(data.pokemon);
-            console.log(`Weaknesses=`,weaknesses);
-            console.log(`Types=`,types);
-            console.log(`Names=`,names);
-            console.log(`Images=`,images);
-            setWeaknesses(weaknesses);
-            setTypes(types);
-            setNames(names);
-            setImages(images);
-            setErrorText("");
-        })
-        .catch((err) => { 
-            console.log(`${err} fetching from URL: ${URL}`);
-            //setList([]);
-            setErrorText(`${err} fetching from URL: ${URL}`);
-        });
-    console.log(`---End Function getPokedexList()---`);
-  }
-  console.log(`---End Function App()---`);
+  console.log(`---End Function ${App.name}()---`);
 
   return (
     <BrowserRouter>
@@ -91,13 +33,9 @@ const App = (props) => {
         </ul>
       </nav>
       <Routes>
-        {/*
-          <Route exact path="/" element={<PokedexPage pokemonList={pokedexList}></PokedexPage>} end></Route>
-        */}
-          <Route exact path="/" element={<HomePage pokemonNames={names} pokemonTypes={types} pokemonWeaknesses={weaknesses} pokemonImages={images} pokemonList={pokedexList}></HomePage>} end></Route>
-          {/*<Route path="/results/:ids/:types/:weaknesses" element={<Results pokedexList={pokedexList} props={props.results}></Results>}></Route>*/}
-          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<Results pokedexList={pokedexList}></Results>}></Route>
-          <Route path="/Details/:id" element={<DetailsView name="Details_Page" pokedexList={pokedexList}></DetailsView>}></Route>
+          <Route exact path="/" element={<HomePage> </HomePage>}end></Route>
+          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<Results></Results>}></Route>
+          <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
       </Routes>
     </BrowserRouter>
   )
