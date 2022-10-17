@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { BrowserRouter, NavLink, Redirect, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { HomePage } from "./views/Home.jsx";
-import { Results } from "./views/Results.jsx";
-import { DetailsView } from "./views/Details.jsx";
+import { HomePage } from "./pages/HomePage.jsx";
+import { ResultsPage } from "./pages/ResultsPage.jsx";
+import { DetailsPage } from "./pages/DetailsPage.jsx";
 
 const App = (props) => {
 
@@ -15,6 +15,10 @@ const App = (props) => {
   const [ images, setImages ] = useState([{"id":0,"img":""}]);
   const [ errorText, setErrorText ] = useState("");
   const [ errorTest, setErrorTest ] = useState(false);
+
+  const homePageHeading = "Pokemon Search";
+  const resultsPageHeading = "Pokemon Search Results";
+  const detailsPageHeading = "Pokemon Details";
   
   useEffect(() => {
     console.log(`---Begin ${useEffect.name}()---`);
@@ -33,9 +37,9 @@ const App = (props) => {
         </ul>
       </nav>
       <Routes>
-          <Route exact path="/" element={<HomePage pageTitle="Pokemon Search"> </HomePage>}end></Route>
-          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<Results pageTitle="Pokemon Search Results"></Results>}></Route>
-          <Route path="/Details/:id" element={<DetailsView name="Details_Page"></DetailsView>}></Route>
+          <Route exact path="/" element={<HomePage pageTitle={homePageHeading}> </HomePage>}end></Route>
+          <Route path="/Results/:ids/:names/:types/:weaknesses/" element={<ResultsPage pageTitle={resultsPageHeading}></ResultsPage>}></Route>
+          <Route path="/Details/:id" element={<DetailsPage pageTitle="Details"></DetailsPage>}></Route>
       </Routes>
     </BrowserRouter>
   )
