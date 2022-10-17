@@ -8,11 +8,11 @@ const Table = (props) => {
 
     console.log(`${Table.name} Props=`, props);
     console.log(`${Table.name} Props.pokemons =`, props.pokemons)
-    console.log(`${Table.name} Pokemons =`,pokemons);
-    console.log(`${Table.name} Props.ids =`,props.ids);
-    console.log(`${Table.name} Props.types =`,props.types);
-    console.log(`${Table.name} Props.weaknesses =`,props.weaknesses);
-    console.log(`${Table.name} Pokemons =`,pokemons);
+    console.log(`${Table.name} Pokemons =`, pokemons);
+    console.log(`${Table.name} Props.ids =`, props.ids);
+    console.log(`${Table.name} Props.types =`, props.types);
+    console.log(`${Table.name} Props.weaknesses =`, props.weaknesses);
+    console.log(`${Table.name} Pokemons =`, pokemons);
 
     useEffect(() => {
         console.log(`---Begin Function ${useEffect.name}()---`);
@@ -74,21 +74,15 @@ const Table = (props) => {
             <tr>
                 <td>
                     <div className="w-12">
-                        <button value="numericSortDown" onClick={processSort}>
-                            <i id="numeric-sort-down" className="bi bi-sort-numeric-down" ></i>
-                        </button>
-                        <button value="numericSortUp" onClick={processSort}>
-                            <i id="numeric-sort-up" className="bi bi-sort-numeric-up-alt"></i>
-                        </button>
+                        <i id="numeric-sort-down" className="bi bi-sort-numeric-down border p-1 background-color" onClick={processSort}></i>
+                        <i id="numeric-sort-up" className="bi bi-sort-numeric-up-alt border p-1 background-color" onClick={processSort}></i>
                     </div>
                 </td>
                 <td>
-                    <button onClick={processSort}>
-                        <i id="alpha-sort-down" className="bi bi-sort-alpha-down"></i>
-                    </button>
-                    <button onClick={processSort}>
-                        <i id="alpha-sort-up" className="bi bi-sort-alpha-up-alt"></i>
-                    </button>
+                    <div className="w-12">
+                        <i id="alpha-sort-down" className="bi bi-sort-alpha-down border p-1 background-color" onClick={processSort}></i>
+                        <i id="alpha-sort-up" className="bi bi-sort-alpha-up-alt border p-1 background-color" onClick={processSort}></i>
+                    </div>
                 </td>
                 <td></td>
                 <td></td>
