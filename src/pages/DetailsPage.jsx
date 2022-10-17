@@ -1,7 +1,7 @@
 import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 import { React, useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate, Navigate } from "react-router-dom";
-import Footer from "../components/footer";
+import Footer from "../components/Footer";
 import { getPokedexList } from "../utils/pokemonUtils";
 
 let mySeconds = 6;

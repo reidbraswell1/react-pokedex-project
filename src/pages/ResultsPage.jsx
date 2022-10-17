@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Table from "../components/table.jsx";
-import Footer from "../components/footer.jsx";
+import Table from "../components/Table.jsx";
+import Footer from "../components/Footer.jsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { type } from "@testing-library/user-event/dist/type/index.js";
