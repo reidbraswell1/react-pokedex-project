@@ -7,6 +7,7 @@ import { getPokedexList } from "../utils/pokemonUtils.js";
 import { getPokemonNames } from "../utils/pokemonUtils.js";
 import { getPokemonTypes } from "../utils/pokemonUtils.js";
 import { getPokemonWeaknesses } from "../utils/pokemonUtils.js";
+import Footer from "../components/Footer.jsx"
 
 const HomePage = (props) => {
 
@@ -191,7 +192,10 @@ const HomePage = (props) => {
             <div className="col-4 my-center border rounded pb-3 pt-3">
                 <form className="" onSubmit={processSubmission}>
                     <div className="form-group">
-                        <label className="color-white" htmlFor="pokemonName">Pokemon Name</label>
+                        <div className="">
+                            <label className="color-white" htmlFor="pokemonName">Pokemon Name</label>
+                            <span className="color-white" style={{ float: "right" }}>Ctrl selects multiple</span>
+                        </div>
                         <select className="form-select" id="pokemon-name" name="pokemonName" aria-label="Pokemon Name" multiple="true">
                             {isLoading &&
                                 <option id="names-loading">...Fetching Data...</option>
@@ -207,8 +211,11 @@ const HomePage = (props) => {
                             <button className="reset-link" id="pokemon-name-reset" onClick={resetLinks}>Reset</button>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="color-white" for="pokemonType">Pokemon Type</label>
+                    <div className="form-group mt-2">
+                        <div className="">
+                            <label className="color-white" for="pokemonType">Pokemon Type</label>
+                            <span className="color-white" style={{ float: "right" }}>Ctrl selects multiple</span>
+                        </div>
                         <select className="form-select" id="pokemon-type" name="pokemonType" aria-label="Pokemon Type" multiple="true">
                             {isLoading &&
                                 <option id="types-loading">...Fetching Data...</option>
@@ -224,8 +231,11 @@ const HomePage = (props) => {
                             <button className="reset-link" id="pokemon-type-reset" onClick={resetLinks}>Reset</button>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="color-white" for="pokemonWeakness">Pokemon Weakness</label>
+                    <div className="form-group mt-2">
+                        <div>
+                            <label className="color-white" for="pokemonWeakness">Pokemon Weakness</label>
+                            <span className="color-white" style={{ float: "right" }}>Ctrl selects multiple</span>
+                        </div>
                         <select className="form-select" id="pokemon-weakness" name="pokemonWeakness" aria-label="Pokemon Weakness" multiple="true">
                             {isLoading &&
                                 <option id="weaknesses-loading">...Fetching Data...</option>
@@ -244,6 +254,7 @@ const HomePage = (props) => {
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
+            <Footer></Footer>
         </div>
     </div>)
 }
